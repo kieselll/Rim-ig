@@ -210,7 +210,10 @@ horizontal_alignment = 1
 custom_minimum_size = Vector2(430, 20)
 layout_mode = 2
 size_flags_horizontal = 4
-max_value = 2.0
+min_value = 50.0
+max_value = 150.0
+step = 50.0
+value = 50.0
 rounded = true
 tick_count = 3
 ticks_on_borders = true
@@ -270,3 +273,4 @@ placeholder_text = " your name"
 [connection signal="toggled" from="MarginContainer/VBoxContainer/Colonists" to="." method="_on_colonists_toggled"]
 [connection signal="toggled" from="MarginContainer/VBoxContainer/Difficulty" to="." method="_on_difficulty_toggled"]
 [connection signal="pressed" from="Container2/Back" to="." method="_on_button_2_pressed"]
+[connection signal="value_changed" from="MarginContainer2/VBoxContainer/HSlider" to="." method="_on_h_slider_value_changed"]

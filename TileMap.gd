@@ -1,53 +1,105 @@
 extends TileMap
-var button = false
-var button2 = false
+var button_1 = false
+var button_2 = false
 var type = "null"
+var subtype = "null"
 var noise = FastNoiseLite.new()
-var RectX = Vector2i.ZERO
-var RectY = Vector2i.ZERO
+var click_1 = Vector2.ZERO
+var click_2 = Vector2.ZERO
+var selection_array = []
+
 func _ready():
-	noise.noise_type = FastNoiseLite.TYPE_SIMPLEX
+	noise.noise_type = FastNoiseLite.TYPE_PERLIN
 	noise.seed = randi()
 	noise.frequency = 0.2
 
-	for i in 40:
-		for n in 40:
-			print("loading...")
+	for i in WorldCreation.world_size:
+		for n in WorldCreation.world_size:
 			if noise.get_noise_2d(i,n) < -0.3:
 				set_cells_terrain_connect(0,[Vector2i(i,n)],0,3,false)
-			elif noise.get_noise_2d(i,n) < 0.1:
+			elif noise.get_noise_2d(i,n) < -0.1:
 				set_cells_terrain_connect(0,[Vector2i(i,n)],0,2,false)
-			elif noise.get_noise_2d(i,n) < 0.5:
+			elif noise.get_noise_2d(i,n) < 0.7:
 				set_cells_terrain_connect(0,[Vector2i(i,n)],0,1,false)
 			elif noise.get_noise_2d(i,n) < 1:
 				set_cells_terrain_connect(0,[Vector2i(i,n)],0,0,false)
 	
 func _input(event):
-	if button == true:
-		if type != "null":
-			if event is InputEventMouseButton:
-				if event.button_index == MOUSE_BUTTON_LEFT:
-					if event.pressed:
-						print("click")
-						RectX = local_to_map(event.position)
-					elif not event.pressed:
-						print("clack")
-						RectY = local_to_map(event.position)
-						if sign(RectX.x - RectY.x) != 0:
-							print(RectX,RectY,sign(RectY.x - RectX.x))
-							for x in range(RectX.x,RectY.x,sign(RectX.x - RectY.x)):
-								print(x)
-								if type == "Wood wall":
-									print("getting the walls done")
-									set_cells_terrain_connect(1,[Vector2i(RectX.y,x),Vector2i(RectY.y,x)],1,0)
+	if button_1 == true and type == "wall" and event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
+		if event.pressed:
+			click_1 = local_to_map(get_global_mouse_position() - Vector2(-41,19))
+		if not event.pressed:
+			click_2 = local_to_map(get_global_mouse_position() - Vector2(-41,19))
+
+			if subtype == "wood_wall":
+
+				if sign(click_2.x - click_1.x) != 0 and sign(click_2.y - click_1.y) != 0:
+					for i in range(click_1.x,click_2.x + sign(click_2.x - click_1.x),sign(click_2.x - click_1.x)):
+						selection_array.append(Vector2(i,click_1.y))
+						selection_array.append(Vector2(i,click_2.y))
+					for i in range(click_1.y,click_2.y,sign(click_2.y - click_1.y)):
+						selection_array.append(Vector2(click_1.x,i))
+						selection_array.append(Vector2(click_2.x,i))
+						set_cells_terrain_connect(1,selection_array,1,0)
+
+				elif sign(click_2.x - click_1.x) == 0 and sign(click_2.y - click_1.y) != 0:
+					for i in range(click_1.y,click_2.y + sign(click_2.y - click_1.y),sign(click_2.y - click_1.y)):
+						selection_array.append(Vector2(click_1.x,i))
+						selection_array.append(Vector2(click_2.x,i))
+						set_cells_terrain_connect(1,selection_array,1,0)
+
+				elif sign(click_2.y - click_1.y) == 0 and sign(click_2.x - click_1.x) != 0:
+					for i in range(click_1.x,click_2.x + sign(click_2.x - click_1.x),sign(click_2.x - click_1.x)):
+						selection_array.append(Vector2(i,click_1.y))
+						selection_array.append(Vector2(i,click_2.y))
+						set_cells_terrain_connect(1,selection_array,1,0)
+
+				else:
+					set_cells_terrain_connect(1,[click_1],1,0)
+				for i in selection_array.size():
+					WorldCreation.astar.set_point_solid(selection_array.pop_back())
+
+			elif subtype == "remove":
+				if sign(click_2.x - click_1.x) != 0 and sign(click_2.y - click_1.y) != 0:
+					for i in range(click_1.x,click_2.x + sign(click_2.x - click_1.x),sign(click_2.x - click_1.x)):
+						for j in range(click_1.y,click_2.y + sign(click_2.y - click_1.y),sign(click_2.y - click_1.y)):
+							selection_array.append(Vector2(i,j))
+					set_cells_terrain_connect(1,selection_array,1,-1)
+
+				elif sign(click_2.x - click_1.x) == 0 and sign(click_2.y - click_1.y) != 0:
+					for i in range(click_1.y,click_2.y + sign(click_2.y - click_1.y),sign(click_2.y - click_1.y)):
+						selection_array.append(Vector2(click_1.x,i))
+					set_cells_terrain_connect(1,selection_array,1,-1)
+
+				elif sign(click_2.x - click_1.x) != 0 and sign(click_2.y - click_1.y) == 0:
+					for i in range(click_1.x,click_2.x + sign(click_2.x - click_1.x),sign(click_2.x - click_1.x)):
+						selection_array.append(Vector2(i,click_1.y))
+					set_cells_terrain_connect(1,selection_array,1,-1)
+
+				else:
+					set_cells_terrain_connect(1,[click_1],1,-1)
+			click_1 = Vector2.ZERO
+			click_2 = Vector2.ZERO
+			selection_array = []
+
 func _on_button_2_toggled(toggled_on):
-	button2 = toggled_on
+	button_2 = toggled_on
 	
 func _on_button_toggled(toggled_on):
-	button = toggled_on
+	button_1 = toggled_on
 
 func _on_woodwall_toggled(toggled_on):
 	if toggled_on == true:
-		type = "Wood wall"
+		type = "wall"
+		subtype = "wood_wall"
 	else:
 		type = "null"
+		subtype = "null"
+
+func _on_wallremove_toggled(toggled_on):
+	if toggled_on == true:
+		type = "wall"
+		subtype = "remove"
+	else:
+		type = "null"
+		subtype = "null"

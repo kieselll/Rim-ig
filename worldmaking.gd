@@ -33,3 +33,7 @@ func _on_difficulty_toggled(toggled_on):
 	else:
 		$MarginContainer4.process_mode = Node.PROCESS_MODE_DISABLED
 		$MarginContainer4.hide()
+
+
+func _on_h_slider_value_changed(value):
+	WorldCreation.world_size = value
