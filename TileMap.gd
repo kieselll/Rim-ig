@@ -24,18 +24,14 @@ func _ready():
 	
 func _input(event):
 	if event is InputEventMouseButton:
-		if button == true:
-			for i in 1:
-				if i == 0:
-					RectX = map_to_local(event.position)
-				else:
-					RectY = map_to_local(event.position)
-					for x in range(RectX.x,RectY.x,sign(RectX.x - RectY.x)):
-						if type == "Wood wall":
-							set_cells_terrain_connect(1,[Vector2i(RectX.y,x),Vector2i(RectY.y,x)],1,0)
-
-func _on_button_toggled(toggled_on):
-	button = toggled_on
+		for i in 1:
+			if i == 0:
+				RectX = map_to_local(event.position)
+			else:
+				RectY = map_to_local(event.position)
+				for x in range(RectX.x,RectY.x,sign(RectX.x - RectY.x)):
+					if type == "Wood wall":
+						set_cells_terrain_connect(1,[Vector2i(RectX.y,x),Vector2i(RectY.y,x)],1,0)
 
 func _on_button_2_toggled(toggled_on):
 	button2 = toggled_on
