@@ -1,0 +1,272 @@
+[gd_scene load_steps=8 format=3 uid="uid://onk58aw01jan"]
+
+[ext_resource type="Script" path="res://worldmaking.gd" id="1_ft6vv"]
+[ext_resource type="FontVariation" uid="uid://bbfitme5g8b0j" path="res://buttonfont.tres" id="1_yvc4r"]
+[ext_resource type="ButtonGroup" uid="uid://c6vadcrkgdi6l" path="res://worldsettinggrup.tres" id="2_dtvgj"]
+[ext_resource type="FontFile" uid="uid://blb332t4r0fb3" path="res://quantum.ttf" id="2_px5h4"]
+[ext_resource type="FontVariation" uid="uid://0dq5y3prw28b" path="res://textfont.tres" id="3_va163"]
+
+[sub_resource type="Theme" id="Theme_48nfk"]
+
+[sub_resource type="FontVariation" id="FontVariation_4fxif"]
+base_font = ExtResource("2_px5h4")
+variation_embolden = -0.7
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_ft6vv")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+z_index = -2
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -9.0
+offset_top = -7.0
+offset_right = 1.0
+offset_bottom = -1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.172115, 0.172115, 0.172115, 1)
+
+[node name="Container" type="Container" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.011
+anchor_top = 0.901087
+anchor_right = 0.981
+anchor_bottom = 0.967
+offset_left = 766.328
+offset_top = -1.90405
+offset_right = -351.112
+offset_bottom = -44.6157
+
+[node name="Create World" type="Button" parent="Container"]
+layout_mode = 2
+theme = SubResource("Theme_48nfk")
+theme_override_fonts/font = ExtResource("1_yvc4r")
+theme_override_font_sizes/font_size = 30
+text = "Create world!"
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.018
+anchor_top = 0.037
+anchor_right = 0.221
+anchor_bottom = 0.963
+offset_left = 0.264
+offset_top = 0.0240002
+offset_right = 0.40799
+offset_bottom = -0.0239868
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="World Options" type="Button" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_yvc4r")
+theme_override_font_sizes/font_size = 30
+toggle_mode = true
+button_group = ExtResource("2_dtvgj")
+text = "World options"
+
+[node name="Colonists" type="Button" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_yvc4r")
+theme_override_font_sizes/font_size = 30
+toggle_mode = true
+button_group = ExtResource("2_dtvgj")
+text = "Colonists"
+
+[node name="Difficulty" type="Button" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_yvc4r")
+theme_override_font_sizes/font_size = 30
+toggle_mode = true
+button_group = ExtResource("2_dtvgj")
+text = "Difficulty"
+
+[node name="Container2" type="Container" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.011
+anchor_top = 0.898
+anchor_right = 0.115
+anchor_bottom = 0.969
+offset_left = -1.672
+offset_top = 0.0959473
+offset_right = -0.479996
+offset_bottom = 0.0879517
+
+[node name="Back" type="Button" parent="Container2"]
+layout_mode = 2
+theme = SubResource("Theme_48nfk")
+theme_override_fonts/font = ExtResource("1_yvc4r")
+theme_override_font_sizes/font_size = 30
+text = "Back"
+
+[node name="MarginContainer4" type="MarginContainer" parent="."]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.356
+anchor_top = 0.034
+anchor_right = 0.829
+anchor_bottom = 0.864
+offset_left = -0.112
+offset_top = -0.0320015
+offset_right = -0.00805664
+offset_bottom = 0.127991
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer4"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer4/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_va163")
+theme_override_font_sizes/font_size = 30
+text = "Radiation"
+horizontal_alignment = 1
+
+[node name="HSlider" type="HSlider" parent="MarginContainer4/VBoxContainer"]
+layout_mode = 2
+max_value = 20.0
+
+[node name="Label2" type="Label" parent="MarginContainer4/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_va163")
+theme_override_font_sizes/font_size = 30
+text = "Enemy amount"
+horizontal_alignment = 1
+
+[node name="HSlider2" type="HSlider" parent="MarginContainer4/VBoxContainer"]
+layout_mode = 2
+max_value = 20.0
+
+[node name="Label3" type="Label" parent="MarginContainer4/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_va163")
+theme_override_font_sizes/font_size = 30
+text = "Enemy strength"
+horizontal_alignment = 1
+
+[node name="HSlider3" type="HSlider" parent="MarginContainer4/VBoxContainer"]
+layout_mode = 2
+max_value = 20.0
+
+[node name="MarginContainer2" type="MarginContainer" parent="."]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.383
+anchor_top = 0.043
+anchor_right = 0.834
+anchor_bottom = 0.827
+offset_left = -0.215973
+offset_top = 0.136
+offset_right = 0.231934
+offset_bottom = 0.104004
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer2"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+
+[node name="TextEdit" type="TextEdit" parent="MarginContainer2/VBoxContainer"]
+custom_minimum_size = Vector2(40, 50)
+layout_mode = 2
+theme_override_fonts/font = SubResource("FontVariation_4fxif")
+theme_override_font_sizes/font_size = 30
+placeholder_text = " World name"
+caret_type = 1
+
+[node name="TextEdit2" type="TextEdit" parent="MarginContainer2/VBoxContainer"]
+custom_minimum_size = Vector2(40, 50)
+layout_mode = 2
+theme_override_fonts/font = SubResource("FontVariation_4fxif")
+theme_override_font_sizes/font_size = 30
+placeholder_text = " Seed"
+caret_type = 1
+
+[node name="Label" type="Label" parent="MarginContainer2/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_va163")
+theme_override_font_sizes/font_size = 20
+text = "World Size"
+horizontal_alignment = 1
+
+[node name="HSlider" type="HSlider" parent="MarginContainer2/VBoxContainer"]
+custom_minimum_size = Vector2(430, 20)
+layout_mode = 2
+size_flags_horizontal = 4
+max_value = 2.0
+rounded = true
+tick_count = 3
+ticks_on_borders = true
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer2/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label2" type="Label" parent="MarginContainer2/VBoxContainer/MarginContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_va163")
+text = "Medium 
+(100x100)"
+horizontal_alignment = 1
+
+[node name="Label3" type="Label" parent="MarginContainer2/VBoxContainer/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+theme_override_fonts/font = ExtResource("3_va163")
+text = "Large
+(150x150)"
+horizontal_alignment = 1
+
+[node name="Label4" type="Label" parent="MarginContainer2/VBoxContainer/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_fonts/font = ExtResource("3_va163")
+text = "Small 
+(50x50)"
+horizontal_alignment = 1
+
+[node name="MarginContainer3" type="MarginContainer" parent="."]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.359
+anchor_top = 0.034
+anchor_right = 0.681
+anchor_bottom = 0.613
+offset_left = -0.568024
+offset_top = -0.0320015
+offset_right = 0.487915
+offset_bottom = -0.22403
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer3"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+
+[node name="TextEdit" type="TextEdit" parent="MarginContainer3/VBoxContainer"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_va163")
+theme_override_font_sizes/font_size = 30
+placeholder_text = " your name"
+
+[connection signal="pressed" from="Container/Create World" to="." method="_on_button_pressed"]
+[connection signal="toggled" from="MarginContainer/VBoxContainer/World Options" to="." method="_on_world_options_toggled"]
+[connection signal="toggled" from="MarginContainer/VBoxContainer/Colonists" to="." method="_on_colonists_toggled"]
+[connection signal="toggled" from="MarginContainer/VBoxContainer/Difficulty" to="." method="_on_difficulty_toggled"]
+[connection signal="pressed" from="Container2/Back" to="." method="_on_button_2_pressed"]

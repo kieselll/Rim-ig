@@ -1,0 +1,48 @@
+[gd_scene format=3 uid="uid://c8mjqvqebyeop"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 40.0
+offset_bottom = 71.0
+grow_horizontal = 2
+alignment = 1
+
+[node name="Button" type="Button" parent="HBoxContainer"]
+layout_mode = 2
+text = "graphics"
+
+[node name="Button2" type="Button" parent="HBoxContainer"]
+layout_mode = 2
+text = "sound"
+
+[node name="Button3" type="Button" parent="HBoxContainer"]
+layout_mode = 2
+text = "language"
+
+[node name="HSlider" type="HSlider" parent="."]
+layout_mode = 0
+offset_left = 446.0
+offset_top = 104.0
+offset_right = 702.0
+offset_bottom = 120.0
+max_value = 4.0
+tick_count = 5
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+layout_mode = 0
+offset_left = 253.0
+offset_top = 94.0
+offset_right = 403.0
+offset_bottom = 134.0
+scale = Vector2(1.4, 1.4)
+text = "particle amount"
