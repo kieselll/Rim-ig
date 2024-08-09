@@ -1,7 +1,7 @@
 extends TileMap
 var button = false
 var button2 = false
-var type
+var type = "null"
 var noise = FastNoiseLite.new()
 var RectX = Vector2i.ZERO
 var RectY = Vector2i.ZERO
@@ -23,21 +23,31 @@ func _ready():
 				set_cells_terrain_connect(0,[Vector2i(i,n)],0,0,false)
 	
 func _input(event):
-	if event is InputEventMouseButton:
-		for i in 1:
-			if i == 0:
-				RectX = map_to_local(event.position)
-			else:
-				RectY = map_to_local(event.position)
-				for x in range(RectX.x,RectY.x,sign(RectX.x - RectY.x)):
-					if type == "Wood wall":
-						set_cells_terrain_connect(1,[Vector2i(RectX.y,x),Vector2i(RectY.y,x)],1,0)
-
+	if button == true:
+		if type != "null":
+			if event is InputEventMouseButton:
+				if event.button_index == MOUSE_BUTTON_LEFT:
+					if event.pressed:
+						print("click")
+						RectX = local_to_map(event.position)
+					elif not event.pressed:
+						print("clack")
+						RectY = local_to_map(event.position)
+						if sign(RectX.x - RectY.x) != 0:
+							print(RectX,RectY,sign(RectY.x - RectX.x))
+							for x in range(RectX.x,RectY.x,sign(RectX.x - RectY.x)):
+								print(x)
+								if type == "Wood wall":
+									print("getting the walls done")
+									set_cells_terrain_connect(1,[Vector2i(RectX.y,x),Vector2i(RectY.y,x)],1,0)
 func _on_button_2_toggled(toggled_on):
 	button2 = toggled_on
+	
+func _on_button_toggled(toggled_on):
+	button = toggled_on
 
 func _on_woodwall_toggled(toggled_on):
 	if toggled_on == true:
 		type = "Wood wall"
 	else:
-		type = null
+		type = "null"
