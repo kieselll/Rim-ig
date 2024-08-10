@@ -13,6 +13,11 @@ func _ready():
 	noise.noise_type = FastNoiseLite.TYPE_PERLIN
 	noise.seed = randi()
 	noise.frequency = 0.2
+	
+	for i in WorldCreation.world_size:
+		for j in WorldCreation.world_size:
+			if get_cell_tile_data(1,Vector2(i,j)).get_custom_data_by_layer_id(0) == true:
+				WorldCreation.astar.set_point_solid(Vector2(i,j),true)
 
 	for i in WorldCreation.world_size:
 		for n in WorldCreation.world_size:
@@ -58,7 +63,8 @@ func _input(event):
 				else:
 					set_cells_terrain_connect(1,[click_1],1,0)
 				for i in selection_array.size():
-					WorldCreation.astar.set_point_solid(selection_array.pop_back())
+					WorldCreation.astar.set_point_solid(selection_array.pop_back(),true)
+					print("lmao")
 
 			elif subtype == "remove":
 				if sign(click_2.x - click_1.x) != 0 and sign(click_2.y - click_1.y) != 0:
@@ -79,6 +85,7 @@ func _input(event):
 
 				else:
 					set_cells_terrain_connect(1,[click_1],1,-1)
+				WorldCreation.astar.fill_solid_region(Rect2(click_1,click_2 - click_1),false)
 			click_1 = Vector2.ZERO
 			click_2 = Vector2.ZERO
 			selection_array = []

@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://b2icuxwl41o5e"]
+[gd_scene load_steps=30 format=3 uid="uid://b2icuxwl41o5e"]
 
 [ext_resource type="Texture2D" uid="uid://di0acgbgo7b3n" path="res://icon.svg" id="1_os2h6"]
 [ext_resource type="Script" path="res://Mainscene.gd" id="1_sa2du"]
@@ -21,6 +21,7 @@
 [ext_resource type="Texture2D" uid="uid://cbljqpu4m0rav" path="res://textures/ui/Untitled 08-09-2024 09-33-50.png" id="14_66aag"]
 [ext_resource type="Texture2D" uid="uid://bdam5r8csxa1l" path="res://textures/tilesets/Autotile_Template_32x32_BlackBackground (2).png" id="15_de5px"]
 [ext_resource type="Texture2D" uid="uid://b5gibiu5ft0rb" path="res://textures/tilesets/Autotile_Template_32x32_BlackBackground.png" id="16_1xtn7"]
+[ext_resource type="Texture2D" uid="uid://b1cwx5d4mk4p0" path="res://textures/tilesets/Untitled 08-07-2024 01-17-39.png" id="18_mgety"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_dfo06"]
 
@@ -529,6 +530,13 @@ texture_region_size = Vector2i(32, 32)
 7:5/0/terrains_peering_bit/top_side = 0
 7:5/0/terrains_peering_bit/top_right_corner = 0
 7:5/0/custom_data_0 = true
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_uo2xp"]
+texture = ExtResource("18_mgety")
+texture_region_size = Vector2i(32, 32)
+0:0/0 = 0
+0:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+0:0/0/physics_layer_0/angular_velocity = 0.0
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_831u0"]
 texture = ExtResource("15_de5px")
@@ -2756,6 +2764,7 @@ custom_data_layer_0/type = 1
 sources/0 = SubResource("TileSetAtlasSource_hk1mj")
 sources/3 = SubResource("TileSetAtlasSource_831u0")
 sources/1 = SubResource("TileSetAtlasSource_8urio")
+sources/2 = SubResource("TileSetAtlasSource_uo2xp")
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bkfd4"]
 size = Vector2(18, 27)
@@ -2968,9 +2977,14 @@ icon = ExtResource("14_66aag")
 icon_alignment = 1
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Control/CanvasLayer"]
-offset_top = 617.0
-offset_right = 1152.0
-offset_bottom = 648.0
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -28.0
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_vertical = 8
 alignment = 1
 
 [node name="Button" type="Button" parent="Control/CanvasLayer/HBoxContainer"]
