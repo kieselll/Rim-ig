@@ -2869,28 +2869,6 @@ offset_bottom = 59.0
 text = "exit"
 metadata/_edit_use_anchors_ = true
 
-[node name="HFlowContainer" type="HFlowContainer" parent="Control/CanvasLayer"]
-anchors_preset = 12
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = -31.0
-grow_horizontal = 2
-grow_vertical = 0
-alignment = 1
-
-[node name="Button" type="Button" parent="Control/CanvasLayer/HFlowContainer"]
-layout_mode = 2
-toggle_mode = true
-button_group = ExtResource("4_nbrhf")
-text = "build"
-
-[node name="Button2" type="Button" parent="Control/CanvasLayer/HFlowContainer"]
-layout_mode = 2
-toggle_mode = true
-button_group = ExtResource("4_nbrhf")
-text = "colonists"
-
 [node name="ColorRect" type="ColorRect" parent="Control/CanvasLayer"]
 visible = false
 anchors_preset = -1
@@ -2946,7 +2924,7 @@ toggle_mode = true
 button_group = ExtResource("5_fsgq3")
 text = "power"
 
-[node name="ColorRect" type="ColorRect" parent="Control/CanvasLayer/ColorRect"]
+[node name="ColorRect2" type="ColorRect" parent="Control/CanvasLayer/ColorRect"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 1.039
@@ -2956,7 +2934,7 @@ offset_left = 0.0160217
 offset_right = -0.0159912
 color = Color(0.2, 0.2, 0.2, 0.372549)
 
-[node name="GridContainer" type="GridContainer" parent="Control/CanvasLayer/ColorRect/ColorRect"]
+[node name="GridContainer" type="GridContainer" parent="Control/CanvasLayer/ColorRect/ColorRect2"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.003
@@ -2973,7 +2951,7 @@ theme_override_constants/h_separation = 1
 theme_override_constants/v_separation = 1
 columns = 11
 
-[node name="woodwall" type="Button" parent="Control/CanvasLayer/ColorRect/ColorRect/GridContainer"]
+[node name="woodwall" type="Button" parent="Control/CanvasLayer/ColorRect/ColorRect2/GridContainer"]
 texture_filter = 1
 layout_mode = 2
 toggle_mode = true
@@ -2981,13 +2959,31 @@ button_group = ExtResource("12_5e88l")
 icon = ExtResource("13_2ok66")
 icon_alignment = 1
 
-[node name="wallremove" type="Button" parent="Control/CanvasLayer/ColorRect/ColorRect/GridContainer"]
+[node name="wallremove" type="Button" parent="Control/CanvasLayer/ColorRect/ColorRect2/GridContainer"]
 texture_filter = 1
 layout_mode = 2
 toggle_mode = true
 button_group = ExtResource("12_5e88l")
 icon = ExtResource("14_66aag")
 icon_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Control/CanvasLayer"]
+offset_top = 617.0
+offset_right = 1152.0
+offset_bottom = 648.0
+alignment = 1
+
+[node name="Button" type="Button" parent="Control/CanvasLayer/HBoxContainer"]
+layout_mode = 2
+toggle_mode = true
+button_group = ExtResource("4_nbrhf")
+text = "build"
+
+[node name="Button2" type="Button" parent="Control/CanvasLayer/HBoxContainer"]
+layout_mode = 2
+toggle_mode = true
+button_group = ExtResource("4_nbrhf")
+text = "colonists"
 
 [node name="Icon2" type="Sprite2D" parent="."]
 position = Vector2(543, 305)
@@ -3020,12 +3016,16 @@ texture_filter = 1
 texture = ExtResource("10_wq5ye")
 
 [connection signal="pressed" from="Control/CanvasLayer/Button" to="." method="_on_button_pressed"]
-[connection signal="button_down" from="Control/CanvasLayer/HFlowContainer/Button" to="Control/CanvasLayer/ColorRect" method="_on_button_button_down"]
-[connection signal="button_up" from="Control/CanvasLayer/HFlowContainer/Button" to="Control/CanvasLayer/ColorRect" method="_on_button_button_up"]
-[connection signal="toggled" from="Control/CanvasLayer/HFlowContainer/Button" to="Control/CanvasLayer/ColorRect" method="_on_button_toggled"]
-[connection signal="toggled" from="Control/CanvasLayer/HFlowContainer/Button" to="TileMap" method="_on_button_toggled"]
-[connection signal="toggled" from="Control/CanvasLayer/HFlowContainer/Button2" to="Control/CanvasLayer/ColorRect" method="_on_button_2_toggled"]
-[connection signal="toggled" from="Control/CanvasLayer/HFlowContainer/Button2" to="TileMap" method="_on_button_2_toggled"]
-[connection signal="toggled" from="Control/CanvasLayer/HFlowContainer/Button2" to="CharacterBody2D" method="_on_button_2_toggled"]
-[connection signal="toggled" from="Control/CanvasLayer/ColorRect/ColorRect/GridContainer/woodwall" to="TileMap" method="_on_woodwall_toggled"]
-[connection signal="toggled" from="Control/CanvasLayer/ColorRect/ColorRect/GridContainer/wallremove" to="TileMap" method="_on_wallremove_toggled"]
+[connection signal="mouse_entered" from="Control/CanvasLayer/ColorRect" to="TileMap" method="_on_color_rect_mouse_entered"]
+[connection signal="mouse_exited" from="Control/CanvasLayer/ColorRect" to="TileMap" method="_on_color_rect_mouse_exited"]
+[connection signal="mouse_entered" from="Control/CanvasLayer/ColorRect/ColorRect2" to="TileMap" method="_on_color_rect_2_mouse_entered"]
+[connection signal="mouse_exited" from="Control/CanvasLayer/ColorRect/ColorRect2" to="TileMap" method="_on_color_rect_2_mouse_exited"]
+[connection signal="toggled" from="Control/CanvasLayer/ColorRect/ColorRect2/GridContainer/woodwall" to="TileMap" method="_on_woodwall_toggled"]
+[connection signal="toggled" from="Control/CanvasLayer/ColorRect/ColorRect2/GridContainer/wallremove" to="TileMap" method="_on_wallremove_toggled"]
+[connection signal="button_down" from="Control/CanvasLayer/HBoxContainer/Button" to="Control/CanvasLayer/ColorRect" method="_on_button_button_down"]
+[connection signal="button_up" from="Control/CanvasLayer/HBoxContainer/Button" to="Control/CanvasLayer/ColorRect" method="_on_button_button_up"]
+[connection signal="toggled" from="Control/CanvasLayer/HBoxContainer/Button" to="Control/CanvasLayer/ColorRect" method="_on_button_toggled"]
+[connection signal="toggled" from="Control/CanvasLayer/HBoxContainer/Button" to="TileMap" method="_on_button_toggled"]
+[connection signal="toggled" from="Control/CanvasLayer/HBoxContainer/Button2" to="Control/CanvasLayer/ColorRect" method="_on_button_2_toggled"]
+[connection signal="toggled" from="Control/CanvasLayer/HBoxContainer/Button2" to="TileMap" method="_on_button_2_toggled"]
+[connection signal="toggled" from="Control/CanvasLayer/HBoxContainer/Button2" to="CharacterBody2D" method="_on_button_2_toggled"]

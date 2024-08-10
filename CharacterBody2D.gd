@@ -20,18 +20,19 @@ func _physics_process(_delta):
 	if not $"../TileMap".local_to_map(position) == target and not path.is_empty():
 		velocity = (target - $"../TileMap".local_to_map(position)) * speed
 		move_and_slide()
+		position = $"../TileMap".map_to_local(target)
 	else:
 		if not path.is_empty():
-			for i in $"../TileMap".local_to_map(target).x - position.x:
-				for j in $"../TileMap".local_to_map(target).y - position.y:
-					position = Vector2(i,j)
-		target = path.pop_front()
+			target = path.pop_front()
+			print(path)
+			print(target)
 func _input(event):
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and button == true:
 		if event.pressed:
-			path = WorldCreation.astar.get_id_path($"../TileMap".local_to_map(position),$"../TileMap".local_to_map(get_global_mouse_position() - Vector2(-41,19)))
+			path = WorldCreation.astar.get_id_path($"../TileMap".local_to_map(position),$"../TileMap".local_to_map(get_global_mouse_position()))
 			target = path.pop_front()
-			print("path is ",path)
+			
+			print(target)
 
 func _on_button_2_toggled(toggled_on):
 	button = toggled_on

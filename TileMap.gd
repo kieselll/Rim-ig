@@ -7,6 +7,7 @@ var noise = FastNoiseLite.new()
 var click_1 = Vector2.ZERO
 var click_2 = Vector2.ZERO
 var selection_array = []
+var button_hover = false
 
 func _ready():
 	noise.noise_type = FastNoiseLite.TYPE_PERLIN
@@ -25,11 +26,11 @@ func _ready():
 				set_cells_terrain_connect(0,[Vector2i(i,n)],0,0,false)
 	
 func _input(event):
-	if button_1 == true and type == "wall" and event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
+	if button_1 == true and type == "wall" and event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and button_hover == false:
 		if event.pressed:
-			click_1 = local_to_map(get_global_mouse_position() - Vector2(-41,19))
+			click_1 = local_to_map(get_global_mouse_position())
 		if not event.pressed:
-			click_2 = local_to_map(get_global_mouse_position() - Vector2(-41,19))
+			click_2 = local_to_map(get_global_mouse_position())
 
 			if subtype == "wood_wall":
 
@@ -103,3 +104,16 @@ func _on_wallremove_toggled(toggled_on):
 	else:
 		type = "null"
 		subtype = "null"
+
+
+func _on_color_rect_mouse_entered():
+	button_hover = true
+
+func _on_color_rect_mouse_exited():
+	button_hover = false
+
+func _on_color_rect_2_mouse_entered():
+	button_hover = true
+
+func _on_color_rect_2_mouse_exited():
+	button_hover = false
