@@ -2758,6 +2758,9 @@ terrain_set_0/terrain_3/color = Color(0.745338, 0.000315545, 0.716787, 1)
 terrain_set_1/mode = 0
 terrain_set_1/terrain_0/name = "wood wall"
 terrain_set_1/terrain_0/color = Color(0.5, 0.34375, 0.25, 1)
+terrain_set_2/mode = 2
+terrain_set_2/terrain_0/name = "selection"
+terrain_set_2/terrain_0/color = Color(0.564706, 0, 0.768627, 1)
 navigation_layer_0/layers = 1
 custom_data_layer_0/name = "walls"
 custom_data_layer_0/type = 1
@@ -3015,6 +3018,10 @@ layer_1/name = "walls"
 layer_1/z_index = 2
 layer_1/navigation_enabled = false
 layer_1/tile_data = PackedInt32Array(393229, 0, 0, 393230, 0, 0, 393231, 0, 0, 393232, 0, 0, 393233, 0, 0, 393234, 0, 0, 458770, 0, 0, 524306, 0, 0, 589842, 0, 0, 655378, 0, 0, 720914, 0, 0, 327691, 1, 4, 393227, 1, 4, 458763, 262145, 5, 655371, 131073, 5, 720907, 1, 4, 786443, 1, 4, 851979, 65537, 5, 851980, 65537, 4, 851981, 65537, 4, 851982, 65537, 4, 851983, 65537, 4, 851984, 65537, 4, 851985, 65537, 4, 851986, 65537, 4, 851987, 65537, 4, 851988, 65537, 4, 786453, 1, 4, 720917, 1, 4, 655381, 1, 4, 589845, 1, 4, 524309, 1, 4, 458773, 1, 4, 393237, 1, 4, 327701, 1, 4, 262165, 327681, 4, 262164, 65537, 4, 262163, 65537, 4, 262162, 65537, 4, 262161, 65537, 4, 262160, 65537, 4, 262159, 65537, 4, 262158, 65537, 4, 262157, 65537, 4, 262156, 65537, 4, 262155, 196609, 4, 851989, 458753, 4)
+layer_2/name = "selection"
+layer_2/modulate = Color(1, 1, 1, 0.392157)
+layer_2/z_index = 3
+layer_2/tile_data = PackedInt32Array()
 script = ExtResource("5_0batv")
 
 [node name="CharacterBody2D" type="CharacterBody2D" parent="."]
@@ -3038,6 +3045,8 @@ texture = ExtResource("10_wq5ye")
 [connection signal="toggled" from="Control/CanvasLayer/ColorRect/ColorRect2/GridContainer/wallremove" to="TileMap" method="_on_wallremove_toggled"]
 [connection signal="button_down" from="Control/CanvasLayer/HBoxContainer/Button" to="Control/CanvasLayer/ColorRect" method="_on_button_button_down"]
 [connection signal="button_up" from="Control/CanvasLayer/HBoxContainer/Button" to="Control/CanvasLayer/ColorRect" method="_on_button_button_up"]
+[connection signal="mouse_entered" from="Control/CanvasLayer/HBoxContainer/Button" to="TileMap" method="_on_button_mouse_entered"]
+[connection signal="mouse_exited" from="Control/CanvasLayer/HBoxContainer/Button" to="TileMap" method="_on_button_mouse_exited"]
 [connection signal="toggled" from="Control/CanvasLayer/HBoxContainer/Button" to="Control/CanvasLayer/ColorRect" method="_on_button_toggled"]
 [connection signal="toggled" from="Control/CanvasLayer/HBoxContainer/Button" to="TileMap" method="_on_button_toggled"]
 [connection signal="toggled" from="Control/CanvasLayer/HBoxContainer/Button2" to="Control/CanvasLayer/ColorRect" method="_on_button_2_toggled"]

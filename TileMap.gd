@@ -7,17 +7,12 @@ var noise = FastNoiseLite.new()
 var click_1 = Vector2.ZERO
 var click_2 = Vector2.ZERO
 var selection_array = []
-var button_hover = false
 
 func _ready():
 	noise.noise_type = FastNoiseLite.TYPE_PERLIN
 	noise.seed = randi()
 	noise.frequency = 0.2
 	
-	for i in WorldCreation.world_size:
-		for j in WorldCreation.world_size:
-			if get_cell_tile_data(1,Vector2(i,j)).get_custom_data_by_layer_id(0) == true:
-				WorldCreation.astar.set_point_solid(Vector2(i,j),true)
 
 	for i in WorldCreation.world_size:
 		for n in WorldCreation.world_size:
@@ -31,9 +26,38 @@ func _ready():
 				set_cells_terrain_connect(0,[Vector2i(i,n)],0,0,false)
 	
 func _input(event):
-	if button_1 == true and type == "wall" and event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and button_hover == false:
+	if button_1 == true and type == "wall" and event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and WorldCreation.button_hover == false:
 		if event.pressed:
 			click_1 = local_to_map(get_global_mouse_position())
+			while true:
+				if sign(local_to_map(get_global_mouse_position()).x - click_1.x) != 0 and sign(local_to_map(get_global_mouse_position()).y - click_1.y) != 0:
+					for i in range(click_1.x,click_2.x + sign(click_2.x - click_1.x),sign(click_2.x - click_1.x)):
+						selection_array.append(Vector2(i,click_1.y))
+						selection_array.append(Vector2(i,local_to_map(get_global_mouse_position()).y))
+					for i in range(click_1.y,local_to_map(get_global_mouse_position()).y,sign(local_to_map(get_global_mouse_position()).y - click_1.y)):
+						selection_array.append(Vector2(click_1.x,i))
+						selection_array.append(Vector2(local_to_map(get_global_mouse_position()).x,i))
+						set_cells_terrain_connect(2,selection_array,2,0)
+						print("placing")
+
+				elif sign(local_to_map(get_global_mouse_position()).x - click_1.x) == 0 and sign(local_to_map(get_global_mouse_position()).y - click_1.y) != 0:
+					for i in range(click_1.y,local_to_map(get_global_mouse_position()).y + sign(local_to_map(get_global_mouse_position()).y - click_1.y),sign(local_to_map(get_global_mouse_position()).y - click_1.y)):
+						selection_array.append(Vector2(click_1.x,i))
+						selection_array.append(Vector2(local_to_map(get_global_mouse_position()).x,i))
+						set_cells_terrain_connect(2,selection_array,2,0)
+						print("placing")
+
+				elif sign(local_to_map(get_global_mouse_position()).y - click_1.y) == 0 and sign(local_to_map(get_global_mouse_position()).x - click_1.x) != 0:
+					for i in range(click_1.x,local_to_map(get_global_mouse_position()).x + sign(local_to_map(get_global_mouse_position()).x - click_1.x),sign(local_to_map(get_global_mouse_position()).x - click_1.x)):
+						selection_array.append(Vector2(i,click_1.y))
+						selection_array.append(Vector2(i,local_to_map(get_global_mouse_position()).y))
+						set_cells_terrain_connect(2,selection_array,2,0)
+						print("placing")
+
+				else:
+					set_cells_terrain_connect(2,[click_1],2,0)
+					print("placing")
+
 		if not event.pressed:
 			click_2 = local_to_map(get_global_mouse_position())
 
@@ -63,7 +87,7 @@ func _input(event):
 				else:
 					set_cells_terrain_connect(1,[click_1],1,0)
 				for i in selection_array.size():
-					WorldCreation.astar.set_point_solid(selection_array.pop_back(),true)
+					$"../CharacterBody2D".astar.set_point_solid(selection_array.pop_back(),true)
 					print("lmao")
 
 			elif subtype == "remove":
@@ -85,7 +109,8 @@ func _input(event):
 
 				else:
 					set_cells_terrain_connect(1,[click_1],1,-1)
-				WorldCreation.astar.fill_solid_region(Rect2(click_1,click_2 - click_1),false)
+					$"../CharacterBody2D"
+				$"../CharacterBody2D".astar.fill_solid_region(Rect2(click_1,click_2 - click_1),false)
 			click_1 = Vector2.ZERO
 			click_2 = Vector2.ZERO
 			selection_array = []
@@ -112,15 +137,20 @@ func _on_wallremove_toggled(toggled_on):
 		type = "null"
 		subtype = "null"
 
-
-func _on_color_rect_mouse_entered():
-	button_hover = true
-
-func _on_color_rect_mouse_exited():
-	button_hover = false
-
 func _on_color_rect_2_mouse_entered():
-	button_hover = true
+	WorldCreation.button_hover = true
 
 func _on_color_rect_2_mouse_exited():
-	button_hover = false
+	WorldCreation.button_hover = false
+
+func _on_color_rect_mouse_entered():
+	WorldCreation.button_hover = true
+
+func _on_color_rect_mouse_exited():
+	WorldCreation.button_hover = false
+
+func _on_button_mouse_entered():
+	WorldCreation.button_hover = true
+
+func _on_button_mouse_exited():
+	WorldCreation.button_hover = false
