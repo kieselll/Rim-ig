@@ -29,35 +29,6 @@ func _input(event):
 	if button_1 == true and type == "wall" and event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and WorldCreation.button_hover == false:
 		if event.pressed:
 			click_1 = local_to_map(get_global_mouse_position())
-			while true:
-				if sign(local_to_map(get_global_mouse_position()).x - click_1.x) != 0 and sign(local_to_map(get_global_mouse_position()).y - click_1.y) != 0:
-					for i in range(click_1.x,click_2.x + sign(click_2.x - click_1.x),sign(click_2.x - click_1.x)):
-						selection_array.append(Vector2(i,click_1.y))
-						selection_array.append(Vector2(i,local_to_map(get_global_mouse_position()).y))
-					for i in range(click_1.y,local_to_map(get_global_mouse_position()).y,sign(local_to_map(get_global_mouse_position()).y - click_1.y)):
-						selection_array.append(Vector2(click_1.x,i))
-						selection_array.append(Vector2(local_to_map(get_global_mouse_position()).x,i))
-						set_cells_terrain_connect(2,selection_array,2,0)
-						print("placing")
-
-				elif sign(local_to_map(get_global_mouse_position()).x - click_1.x) == 0 and sign(local_to_map(get_global_mouse_position()).y - click_1.y) != 0:
-					for i in range(click_1.y,local_to_map(get_global_mouse_position()).y + sign(local_to_map(get_global_mouse_position()).y - click_1.y),sign(local_to_map(get_global_mouse_position()).y - click_1.y)):
-						selection_array.append(Vector2(click_1.x,i))
-						selection_array.append(Vector2(local_to_map(get_global_mouse_position()).x,i))
-						set_cells_terrain_connect(2,selection_array,2,0)
-						print("placing")
-
-				elif sign(local_to_map(get_global_mouse_position()).y - click_1.y) == 0 and sign(local_to_map(get_global_mouse_position()).x - click_1.x) != 0:
-					for i in range(click_1.x,local_to_map(get_global_mouse_position()).x + sign(local_to_map(get_global_mouse_position()).x - click_1.x),sign(local_to_map(get_global_mouse_position()).x - click_1.x)):
-						selection_array.append(Vector2(i,click_1.y))
-						selection_array.append(Vector2(i,local_to_map(get_global_mouse_position()).y))
-						set_cells_terrain_connect(2,selection_array,2,0)
-						print("placing")
-
-				else:
-					set_cells_terrain_connect(2,[click_1],2,0)
-					print("placing")
-
 		if not event.pressed:
 			click_2 = local_to_map(get_global_mouse_position())
 

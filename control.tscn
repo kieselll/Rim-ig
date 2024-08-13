@@ -12,7 +12,7 @@
 [ext_resource type="Texture2D" uid="uid://ro61byxcl6wb" path="res://textures/ui/Untitled 08-08-2024 07-18-10 (2).png" id="5_vg21p"]
 [ext_resource type="Texture2D" uid="uid://k2rga0ka0j8s" path="res://textures/ui/Untitled 08-08-2024 07-18-10.png" id="6_d7xcu"]
 [ext_resource type="Texture2D" uid="uid://by3hv4coijng3" path="res://textures/ui/Untitled 08-08-2024 07-18-10 (5).png" id="7_4kuci"]
-[ext_resource type="Texture2D" uid="uid://bodpfkh7f87qh" path="res://External.png" id="7_p2s8u"]
+[ext_resource type="Texture2D" uid="uid://bodpfkh7f87qh" path="res://textures/tilesets/External.png" id="7_p2s8u"]
 [ext_resource type="Texture2D" uid="uid://c6vg5x6j4xxas" path="res://textures/ui/Untitled 08-08-2024 07-18-10 (6).png" id="8_iqqyf"]
 [ext_resource type="Script" path="res://CharacterBody2D.gd" id="9_ocqk3"]
 [ext_resource type="Texture2D" uid="uid://supgli3ajes5" path="res://man.png" id="10_wq5ye"]
@@ -535,8 +535,14 @@ texture_region_size = Vector2i(32, 32)
 texture = ExtResource("18_mgety")
 texture_region_size = Vector2i(32, 32)
 0:0/0 = 0
+0:0/0/terrain_set = 2
+0:0/0/terrain = 0
 0:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 0:0/0/physics_layer_0/angular_velocity = 0.0
+0:0/0/terrains_peering_bit/right_side = 0
+0:0/0/terrains_peering_bit/bottom_side = 0
+0:0/0/terrains_peering_bit/left_side = 0
+0:0/0/terrains_peering_bit/top_side = 0
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_831u0"]
 texture = ExtResource("15_de5px")
