@@ -13,7 +13,6 @@ func _ready():
 	noise.seed = randi()
 	noise.frequency = 0.2
 	
-
 	for i in WorldCreation.world_size:
 		for n in WorldCreation.world_size:
 			if noise.get_noise_2d(i,n) < -0.3:
@@ -25,6 +24,8 @@ func _ready():
 			elif noise.get_noise_2d(i,n) < 1:
 				set_cells_terrain_connect(0,[Vector2i(i,n)],0,0,false)
 	
+func _process(delta):
+	delta = 300
 func _input(event):
 	if button_1 == true and type == "wall" and event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and WorldCreation.button_hover == false:
 		if event.pressed:
@@ -81,7 +82,7 @@ func _input(event):
 				else:
 					set_cells_terrain_connect(1,[click_1],1,-1)
 					$"../CharacterBody2D"
-				$"../CharacterBody2D".astar.fill_solid_region(Rect2(click_1,click_2 - click_1),false)
+				$"../CharacterBody2D".astar.fill_solid_region(Rect2(click_1,click_2 - click_1).abs(),false)
 			click_1 = Vector2.ZERO
 			click_2 = Vector2.ZERO
 			selection_array = []
@@ -124,4 +125,10 @@ func _on_button_mouse_entered():
 	WorldCreation.button_hover = true
 
 func _on_button_mouse_exited():
+	WorldCreation.button_hover = false
+
+func _on_woodwall_mouse_entered():
+	WorldCreation.button_hover = true
+
+func _on_woodwall_mouse_exited():
 	WorldCreation.button_hover = false
