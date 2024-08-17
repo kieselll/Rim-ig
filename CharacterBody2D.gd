@@ -6,6 +6,13 @@ var button
 var approach
 var astar = AStarGrid2D.new()
 var tile_data : TileData
+@export var current_state = states.IDLE
+
+enum states {
+	IDLE,
+	ALERT,
+	ATTACK
+}
 
 func _ready():
 	astar.cell_size = Vector2(32,32)
@@ -28,16 +35,21 @@ func _physics_process(_delta):
 		target = path.pop_front()
 		print(path)
 		print(target)
-	else:
-		if target != null and not position == $"../TileMap".map_to_local(target):
-			position = position.move_toward($"../TileMap".map_to_local(target),3)
-func _input(event):
-	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and button == true and WorldCreation.button_hover == false and astar.is_point_solid($"../TileMap".local_to_map(get_global_mouse_position())) == false:
-		if event.pressed:
-			path = astar.get_id_path($"../TileMap".local_to_map(position),$"../TileMap".local_to_map(get_global_mouse_position()))
-			path.append($"../TileMap".local_to_map(event.position))
+	elif target != null and not position == $"../TileMap".map_to_local(target):
+		position = position.move_toward($"../TileMap".map_to_local(target),3)
+	elif path.is_empty():
+		if current_state == states.IDLE:
+			path = astar.get_id_path($"../TileMap".local_to_map(position),Vector2(randi_range($"../TileMap".local_to_map(position).x - 4,$"../TileMap".local_to_map(position).x + 4),randi_range($"../TileMap".local_to_map(position).y - 4,$"../TileMap".local_to_map(position).y + 4)))
 			target = path.pop_front()
 
 func _on_button_2_toggled(toggled_on):
 	button = toggled_on
 	print(button)
+
+
+func _on_area_2d_body_entered(body):
+	current_state = states.ATTACK
+
+
+func _on_area_2d_body_exited(body):
+	current_state = states.ALERT
