@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://dr6k31q7yjhmr"]
 
-[ext_resource type="Script" path="res://menu.gd" id="1_vjd4s"]
-[ext_resource type="FontVariation" uid="uid://cswaniwqhxsha" path="res://titlefont.tres" id="2_t26xi"]
+[ext_resource type="Script" path="res://scripts/menu.gd" id="1_5dkxu"]
+[ext_resource type="FontVariation" uid="uid://cswaniwqhxsha" path="res://titlefont.tres" id="2_pxfd7"]
 
 [sub_resource type="Gradient" id="Gradient_awoeb"]
 interpolation_mode = 2
@@ -24,7 +24,7 @@ offset_right = -26.0
 offset_bottom = -24.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_vjd4s")
+script = ExtResource("1_5dkxu")
 metadata/_edit_use_anchors_ = true
 
 [node name="Label" type="Label" parent="."]
@@ -44,7 +44,7 @@ theme_override_colors/font_outline_color = Color(0, 1, 0, 1)
 theme_override_constants/shadow_offset_x = 7
 theme_override_constants/shadow_offset_y = 7
 theme_override_constants/outline_size = 10
-theme_override_fonts/font = ExtResource("2_t26xi")
+theme_override_fonts/font = ExtResource("2_pxfd7")
 theme_override_font_sizes/font_size = 80
 text = "Radioid"
 

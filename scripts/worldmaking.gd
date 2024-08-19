@@ -5,10 +5,10 @@ func _ready():
 	$ColorRect/HBoxContainer/Container3/VBoxContainer3.hide()
 	
 func _on_button_2_pressed():
-	get_tree().change_scene_to_file("res://menu.tscn")
+	get_tree().change_scene_to_file("res://scenes/menu.tscn")
 
 func _on_button_pressed():
-	get_tree().change_scene_to_file("res://control.tscn")
+	get_tree().change_scene_to_file("res://scenes/control.tscn")
 
 func _on_world_options_toggled(toggled_on):
 	if toggled_on == true:

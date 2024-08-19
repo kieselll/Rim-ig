@@ -1,13 +1,13 @@
 [gd_scene load_steps=8 format=3 uid="uid://onk58aw01jan"]
 
-[ext_resource type="Script" path="res://worldmaking.gd" id="1_ft6vv"]
-[ext_resource type="FontVariation" uid="uid://bbfitme5g8b0j" path="res://buttonfont.tres" id="1_yvc4r"]
-[ext_resource type="ButtonGroup" uid="uid://c6vadcrkgdi6l" path="res://worldsettinggrup.tres" id="2_dtvgj"]
-[ext_resource type="FontFile" uid="uid://blb332t4r0fb3" path="res://quantum.ttf" id="2_px5h4"]
-[ext_resource type="FontVariation" uid="uid://0dq5y3prw28b" path="res://textfont.tres" id="3_va163"]
+[ext_resource type="Script" path="res://scripts/worldmaking.gd" id="1_n266i"]
+[ext_resource type="FontVariation" uid="uid://bbfitme5g8b0j" path="res://buttonfont.tres" id="2_6xud4"]
+[ext_resource type="ButtonGroup" uid="uid://c6vadcrkgdi6l" path="res://worldsettinggrup.tres" id="3_1lqf6"]
+[ext_resource type="FontFile" uid="uid://blb332t4r0fb3" path="res://quantum.ttf" id="4_67epj"]
+[ext_resource type="FontVariation" uid="uid://0dq5y3prw28b" path="res://textfont.tres" id="5_kvtd0"]
 
 [sub_resource type="FontVariation" id="FontVariation_4fxif"]
-base_font = ExtResource("2_px5h4")
+base_font = ExtResource("4_67epj")
 variation_embolden = -0.7
 
 [sub_resource type="Theme" id="Theme_48nfk"]
@@ -19,7 +19,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_ft6vv")
+script = ExtResource("1_n266i")
 metadata/_edit_use_anchors_ = true
 
 [node name="ColorRect" type="ColorRect" parent="."]
@@ -58,27 +58,27 @@ layout_mode = 2
 
 [node name="World Options" type="Button" parent="ColorRect/HBoxContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
-theme_override_fonts/font = ExtResource("1_yvc4r")
+theme_override_fonts/font = ExtResource("2_6xud4")
 theme_override_font_sizes/font_size = 30
 toggle_mode = true
 button_pressed = true
-button_group = ExtResource("2_dtvgj")
+button_group = ExtResource("3_1lqf6")
 text = "World options"
 
 [node name="Colonists" type="Button" parent="ColorRect/HBoxContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
-theme_override_fonts/font = ExtResource("1_yvc4r")
+theme_override_fonts/font = ExtResource("2_6xud4")
 theme_override_font_sizes/font_size = 30
 toggle_mode = true
-button_group = ExtResource("2_dtvgj")
+button_group = ExtResource("3_1lqf6")
 text = "Colonists"
 
 [node name="Difficulty" type="Button" parent="ColorRect/HBoxContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
-theme_override_fonts/font = ExtResource("1_yvc4r")
+theme_override_fonts/font = ExtResource("2_6xud4")
 theme_override_font_sizes/font_size = 30
 toggle_mode = true
-button_group = ExtResource("2_dtvgj")
+button_group = ExtResource("3_1lqf6")
 text = "Difficulty"
 
 [node name="Container3" type="Container" parent="ColorRect/HBoxContainer"]
@@ -111,7 +111,7 @@ caret_type = 1
 
 [node name="Label" type="Label" parent="ColorRect/HBoxContainer/Container3/VBoxContainer"]
 layout_mode = 2
-theme_override_fonts/font = ExtResource("3_va163")
+theme_override_fonts/font = ExtResource("5_kvtd0")
 theme_override_font_sizes/font_size = 20
 text = "World Size"
 horizontal_alignment = 1
@@ -133,7 +133,7 @@ layout_mode = 2
 
 [node name="Label2" type="Label" parent="ColorRect/HBoxContainer/Container3/VBoxContainer/MarginContainer"]
 layout_mode = 2
-theme_override_fonts/font = ExtResource("3_va163")
+theme_override_fonts/font = ExtResource("5_kvtd0")
 text = "Medium 
 (100x100)"
 horizontal_alignment = 1
@@ -141,7 +141,7 @@ horizontal_alignment = 1
 [node name="Label3" type="Label" parent="ColorRect/HBoxContainer/Container3/VBoxContainer/MarginContainer"]
 layout_mode = 2
 size_flags_horizontal = 8
-theme_override_fonts/font = ExtResource("3_va163")
+theme_override_fonts/font = ExtResource("5_kvtd0")
 text = "Large
 (150x150)"
 horizontal_alignment = 1
@@ -149,7 +149,7 @@ horizontal_alignment = 1
 [node name="Label4" type="Label" parent="ColorRect/HBoxContainer/Container3/VBoxContainer/MarginContainer"]
 layout_mode = 2
 size_flags_horizontal = 0
-theme_override_fonts/font = ExtResource("3_va163")
+theme_override_fonts/font = ExtResource("5_kvtd0")
 text = "Small 
 (50x50)"
 horizontal_alignment = 1
@@ -164,7 +164,7 @@ size_flags_vertical = 3
 custom_minimum_size = Vector2(300, 50)
 layout_mode = 2
 size_flags_vertical = 2
-theme_override_fonts/font = ExtResource("3_va163")
+theme_override_fonts/font = ExtResource("5_kvtd0")
 theme_override_font_sizes/font_size = 30
 placeholder_text = " your name"
 
@@ -177,7 +177,7 @@ size_flags_vertical = 3
 
 [node name="Label" type="Label" parent="ColorRect/HBoxContainer/Container3/VBoxContainer3"]
 layout_mode = 2
-theme_override_fonts/font = ExtResource("3_va163")
+theme_override_fonts/font = ExtResource("5_kvtd0")
 theme_override_font_sizes/font_size = 30
 text = "Radiation"
 horizontal_alignment = 1
@@ -188,7 +188,7 @@ max_value = 20.0
 
 [node name="Label2" type="Label" parent="ColorRect/HBoxContainer/Container3/VBoxContainer3"]
 layout_mode = 2
-theme_override_fonts/font = ExtResource("3_va163")
+theme_override_fonts/font = ExtResource("5_kvtd0")
 theme_override_font_sizes/font_size = 30
 text = "Enemy amount"
 horizontal_alignment = 1
@@ -199,7 +199,7 @@ max_value = 20.0
 
 [node name="Label3" type="Label" parent="ColorRect/HBoxContainer/Container3/VBoxContainer3"]
 layout_mode = 2
-theme_override_fonts/font = ExtResource("3_va163")
+theme_override_fonts/font = ExtResource("5_kvtd0")
 theme_override_font_sizes/font_size = 30
 text = "Enemy strength"
 horizontal_alignment = 1
@@ -225,7 +225,7 @@ grow_vertical = 0
 [node name="Create World" type="Button" parent="Container"]
 layout_mode = 2
 theme = SubResource("Theme_48nfk")
-theme_override_fonts/font = ExtResource("1_yvc4r")
+theme_override_fonts/font = ExtResource("2_6xud4")
 theme_override_font_sizes/font_size = 30
 text = "Create world!"
 
@@ -243,7 +243,7 @@ grow_vertical = 0
 [node name="Back" type="Button" parent="Container2"]
 layout_mode = 2
 theme = SubResource("Theme_48nfk")
-theme_override_fonts/font = ExtResource("1_yvc4r")
+theme_override_fonts/font = ExtResource("2_6xud4")
 theme_override_font_sizes/font_size = 30
 text = "Back"
 
