@@ -1,4 +1,4 @@
-[gd_scene load_steps=41 format=3 uid="uid://b2icuxwl41o5e"]
+[gd_scene load_steps=36 format=3 uid="uid://b2icuxwl41o5e"]
 
 [ext_resource type="Script" path="res://scripts/Mainscene.gd" id="1_i8tk3"]
 [ext_resource type="Script" path="res://scripts/Camera2D.gd" id="2_mo25s"]
@@ -25,21 +25,6 @@
 [ext_resource type="Texture2D" uid="uid://supgli3ajes5" path="res://man.png" id="23_xwpay"]
 [ext_resource type="Texture2D" uid="uid://cjq2kpjxx88ae" path="res://textures/items/Untitled 08-08-2024 08-47-15.png" id="24_dbvs3"]
 [ext_resource type="Texture2D" uid="uid://c76rfslreko6m" path="res://textures/items/Untitled 08-17-2024 07-40-03.png" id="25_ghscd"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_5oywt"]
-size = Vector2(192, 192)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_m62m6"]
-size = Vector2(64, 130)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_may5u"]
-size = Vector2(632, 194)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_ev1mv"]
-size = Vector2(227, 28)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_nb8uv"]
-size = Vector2(67, 31)
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_dfo06"]
 
@@ -2894,16 +2879,17 @@ metadata/_edit_use_anchors_ = true
 [node name="CanvasLayer" type="CanvasLayer" parent="Control"]
 
 [node name="movement_buttons" type="Container" parent="Control/CanvasLayer"]
-anchors_preset = 2
-anchor_top = 1.0
-anchor_bottom = 1.0
-offset_left = 136.0
-offset_top = -294.0
-offset_right = 328.0
-offset_bottom = -102.0
+anchors_preset = -1
+anchor_left = 0.115
+anchor_top = 0.648
+anchor_right = 0.282
+anchor_bottom = 0.944
+offset_left = 0.520004
+offset_top = 0.0960083
+offset_right = 0.135986
+offset_bottom = 0.287964
 grow_vertical = 0
 size_flags_horizontal = 4
-metadata/_edit_use_anchors_ = true
 
 [node name="TouchScreenButton" type="TouchScreenButton" parent="Control/CanvasLayer/movement_buttons"]
 texture_filter = 1
@@ -2945,12 +2931,6 @@ passby_press = true
 action = "up"
 visibility_mode = 1
 
-[node name="movement_buttons_area" type="Area2D" parent="Control/CanvasLayer/movement_buttons"]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Control/CanvasLayer/movement_buttons/movement_buttons_area"]
-position = Vector2(96, 96)
-shape = SubResource("RectangleShape2D_5oywt")
-
 [node name="zoom_buttons" type="Container" parent="Control/CanvasLayer"]
 anchors_preset = -1
 anchor_left = 0.922
@@ -2981,12 +2961,6 @@ texture_pressed = ExtResource("8_e3ift")
 action = "zoom_out"
 visibility_mode = 1
 
-[node name="zoom_buttons_area" type="Area2D" parent="Control/CanvasLayer/zoom_buttons"]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Control/CanvasLayer/zoom_buttons/zoom_buttons_area"]
-position = Vector2(32, 65)
-shape = SubResource("RectangleShape2D_m62m6")
-
 [node name="exit_button" type="Button" parent="Control/CanvasLayer"]
 anchors_preset = -1
 anchor_left = 0.024
@@ -3002,14 +2976,14 @@ metadata/_edit_use_anchors_ = true
 
 [node name="selection_buttons_rect" type="ColorRect" parent="Control/CanvasLayer"]
 anchors_preset = -1
-anchor_left = 0.083
-anchor_top = 0.582
-anchor_right = 0.306
-anchor_bottom = 0.878
-offset_left = 278.384
-offset_top = -23.136
-offset_right = 277.488
-offset_bottom = -22.944
+anchor_left = 0.325
+anchor_top = 0.648
+anchor_right = 0.866
+anchor_bottom = 0.944
+offset_left = -3.40002
+offset_top = 0.0960083
+offset_right = -370.632
+offset_bottom = 0.287964
 grow_vertical = 0
 size_flags_horizontal = 4
 size_flags_vertical = 4
@@ -3076,12 +3050,12 @@ layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.003
 anchor_top = 0.005
-anchor_right = 0.997
+anchor_right = 0.992
 anchor_bottom = 0.995
-offset_left = -0.098
-offset_top = 0.04
-offset_right = 0.0979919
-offset_bottom = -0.0400085
+offset_left = -0.0919999
+offset_top = 0.0400002
+offset_right = -0.0879822
+offset_bottom = -0.039978
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/h_separation = 1
@@ -3199,13 +3173,6 @@ layout_mode = 2
 toggle_mode = true
 icon = ExtResource("14_57ac1")
 
-[node name="selection_area" type="Area2D" parent="Control/CanvasLayer/selection_buttons_rect"]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Control/CanvasLayer/selection_buttons_rect/selection_area"]
-position = Vector2(315, 96)
-shape = SubResource("RectangleShape2D_may5u")
-debug_color = Color(0, 0.6, 0.701961, 0.419608)
-
 [node name="ui_buttons" type="HBoxContainer" parent="Control/CanvasLayer"]
 anchors_preset = 12
 anchor_top = 1.0
@@ -3220,6 +3187,7 @@ alignment = 1
 [node name="build_toggle_button" type="Button" parent="Control/CanvasLayer/ui_buttons"]
 layout_mode = 2
 toggle_mode = true
+button_pressed = true
 button_group = ExtResource("15_w0byy")
 text = "build"
 
@@ -3228,19 +3196,6 @@ layout_mode = 2
 toggle_mode = true
 button_group = ExtResource("15_w0byy")
 text = "colonists"
-
-[node name="bottom_buttons_area" type="Area2D" parent="Control/CanvasLayer"]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Control/CanvasLayer/bottom_buttons_area"]
-position = Vector2(575.5, 634)
-shape = SubResource("RectangleShape2D_ev1mv")
-
-[node name="exit_button_area" type="Area2D" parent="Control/CanvasLayer"]
-position = Vector2(-434, -592)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Control/CanvasLayer/exit_button_area"]
-position = Vector2(495.5, 635.5)
-shape = SubResource("RectangleShape2D_nb8uv")
 
 [node name="TileMap" type="TileMap" parent="."]
 texture_filter = 1
@@ -3280,8 +3235,7 @@ target_position = Vector2(0, 0)
 [node name="Sprite2D2" type="Sprite2D" parent="test_pawn"]
 z_index = 2
 texture_filter = 1
-position = Vector2(-5, 3)
-scale = Vector2(0.6, 0.6)
+position = Vector2(-4, 3)
 texture = ExtResource("24_dbvs3")
 
 [node name="Area2D" type="Area2D" parent="test_pawn/Sprite2D2"]
@@ -3311,10 +3265,6 @@ texture = ExtResource("25_ghscd")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
 shape = SubResource("RectangleShape2D_7pkrf")
 
-[connection signal="mouse_entered" from="Control/CanvasLayer/movement_buttons/movement_buttons_area" to="TileMap" method="_on_movement_buttons_area_mouse_entered"]
-[connection signal="mouse_exited" from="Control/CanvasLayer/movement_buttons/movement_buttons_area" to="TileMap" method="_on_movement_buttons_area_mouse_exited"]
-[connection signal="mouse_entered" from="Control/CanvasLayer/zoom_buttons/zoom_buttons_area" to="TileMap" method="_on_zoom_buttons_area_mouse_entered"]
-[connection signal="mouse_exited" from="Control/CanvasLayer/zoom_buttons/zoom_buttons_area" to="TileMap" method="_on_zoom_buttons_area_mouse_exited"]
 [connection signal="pressed" from="Control/CanvasLayer/exit_button" to="." method="_on_button_pressed"]
 [connection signal="toggled" from="Control/CanvasLayer/selection_buttons_rect/VBoxContainer/wall_selection_button" to="Control/CanvasLayer/selection_buttons_rect" method="_on_wall_selection_button_toggled"]
 [connection signal="toggled" from="Control/CanvasLayer/selection_buttons_rect/VBoxContainer/floor_selection_button" to="Control/CanvasLayer/selection_buttons_rect" method="_on_floor_selection_button_toggled"]
@@ -3329,18 +3279,12 @@ shape = SubResource("RectangleShape2D_7pkrf")
 [connection signal="mouse_exited" from="Control/CanvasLayer/selection_buttons_rect/grid_rect/wall_selection_grid/wallremove" to="TileMap" method="_on_wallremove_mouse_exited"]
 [connection signal="toggled" from="Control/CanvasLayer/selection_buttons_rect/grid_rect/wall_selection_grid/wallremove" to="TileMap" method="_on_wallremove_toggled"]
 [connection signal="toggled" from="Control/CanvasLayer/selection_buttons_rect/grid_rect/plant_selection_grid/brussels_planting" to="TileMap" method="_on_brussels_planting_toggled"]
-[connection signal="mouse_entered" from="Control/CanvasLayer/selection_buttons_rect/selection_area" to="TileMap" method="_on_selection_area_mouse_entered"]
-[connection signal="mouse_exited" from="Control/CanvasLayer/selection_buttons_rect/selection_area" to="TileMap" method="_on_selection_area_mouse_exited"]
 [connection signal="button_down" from="Control/CanvasLayer/ui_buttons/build_toggle_button" to="Control/CanvasLayer/selection_buttons_rect" method="_on_button_button_down"]
 [connection signal="button_up" from="Control/CanvasLayer/ui_buttons/build_toggle_button" to="Control/CanvasLayer/selection_buttons_rect" method="_on_button_button_up"]
 [connection signal="toggled" from="Control/CanvasLayer/ui_buttons/build_toggle_button" to="Control/CanvasLayer/selection_buttons_rect" method="_on_button_toggled"]
 [connection signal="toggled" from="Control/CanvasLayer/ui_buttons/build_toggle_button" to="TileMap" method="_on_button_toggled"]
 [connection signal="toggled" from="Control/CanvasLayer/ui_buttons/colonists_button_toggle" to="TileMap" method="_on_button_2_toggled"]
 [connection signal="toggled" from="Control/CanvasLayer/ui_buttons/colonists_button_toggle" to="test_pawn" method="_on_button_2_toggled"]
-[connection signal="mouse_entered" from="Control/CanvasLayer/bottom_buttons_area" to="TileMap" method="_on_bottom_buttons_area_mouse_entered"]
-[connection signal="mouse_exited" from="Control/CanvasLayer/bottom_buttons_area" to="TileMap" method="_on_bottom_buttons_area_mouse_exited"]
-[connection signal="mouse_entered" from="Control/CanvasLayer/exit_button_area" to="TileMap" method="_on_exit_button_area_mouse_entered"]
-[connection signal="mouse_exited" from="Control/CanvasLayer/exit_button_area" to="TileMap" method="_on_exit_button_area_mouse_exited"]
 [connection signal="body_entered" from="test_pawn/Sprite2D2/Area2D" to="test_pawn" method="_on_area_2d_body_entered"]
 [connection signal="body_exited" from="test_pawn/Sprite2D2/Area2D" to="test_pawn" method="_on_area_2d_body_exited"]
 [connection signal="timeout" from="test_pawn/alert_timer" to="test_pawn" method="_on_alert_timer_timeout"]

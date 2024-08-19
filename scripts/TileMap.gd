@@ -7,6 +7,7 @@ var click_1 = Vector2.ZERO
 var click_2 = Vector2.ZERO
 var selection_array = []
 var filled_area
+var os_name = OS.get_name()
 
 var plants : Dictionary = {
 	
@@ -23,6 +24,12 @@ class plant_types:
 class types:
 	const wall = wall_types
 	const plant = plant_types
+
+func check_mouse_collision(node : Node):
+	if node.get_global_mouse_position() - node.global_position >= 0 and node.get_global_mouse_position() - node.global_position <= node.size:
+		return true
+	else:
+		return false
 
 func fill_area(pos_1 : Vector2i,pos_2 : Vector2i, fill : bool, layer : int, terrain_set : int, terrain : int, solid : bool):
 	var fill_rect = Rect2(pos_1,pos_2 - pos_1).abs()
@@ -60,8 +67,18 @@ func _ready():
 				set_cells_terrain_connect(0,[Vector2i(i,n)],0,1,false)
 			elif noise.get_noise_2d(i,n) < 1:
 				set_cells_terrain_connect(0,[Vector2i(i,n)],0,0,false)
-	
+
 func _process(delta):
+	if check_mouse_collision($"../Control/CanvasLayer/selection_buttons_rect")\
+	or check_mouse_collision($"../Control/CanvasLayer/selection_buttons_rect/grid_rect")\
+	or check_mouse_collision($"../Control/CanvasLayer/ui_buttons"):
+		WorldCreation.button_hover = true
+	elif os_name == "Android":
+		if check_mouse_collision($"../Control/CanvasLayer/movement_buttons")\
+		or check_mouse_collision($"../Control/CanvasLayer/zoom_buttons"):
+			WorldCreation.button_hover = true
+	else:
+		WorldCreation.button_hover = false
 	if Input.is_action_just_pressed("check"):
 		print(plants[Vector2(local_to_map(get_global_mouse_position()).x,local_to_map(get_global_mouse_position()).y)])
 func _input(event):
@@ -108,11 +125,6 @@ func _on_brussels_planting_toggled(toggled_on):
 	if toggled_on == true:
 		subtype = types.plant.brussels
 #endregion
-
-#region button_hover
-
-#endregion
-
 func _on_crop_timer_timeout():
 	print("growing")
 	for i in plants.size():

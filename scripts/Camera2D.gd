@@ -15,3 +15,4 @@ func _process(_delta):
 		set_zoom(get_zoom()+Vector2(zoom_speed,zoom_speed))
 	if Input.is_action_pressed("zoom_out"):
 		set_zoom(get_zoom()-Vector2(zoom_speed,zoom_speed))
+
