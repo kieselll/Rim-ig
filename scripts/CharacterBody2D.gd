@@ -31,10 +31,14 @@ func _ready():
 func _physics_process(_delta):
 	approach_speed = roundi(speed / 67)
 	if focus:
-		raycast.target_position = focus.position
+		raycast.target_position = focus.global_position - global_position
 	if target and not $"../TileMap".local_to_map(position) == target and not path.is_empty():
-		velocity = position.direction_to($"../TileMap".map_to_local(target)) * speed
-		move_and_slide()
+		if current_state == states.IDLE or current_state == states.ALERT:
+			velocity = position.direction_to($"../TileMap".map_to_local(target)) * speed
+			move_and_slide()
+		elif current_state == states.ATTACK:
+			velocity = position.direction_to(position) * speed
+			move_and_slide()
 	elif not path.is_empty():
 		target = path.pop_front()
 	elif target != null and not position == $"../TileMap".map_to_local(target):
@@ -46,21 +50,27 @@ func _physics_process(_delta):
 		if current_state == states.IDLE:
 			speed = 100
 			path = astar.get_id_path($"../TileMap".local_to_map(position),Vector2(randi_range($"../TileMap".local_to_map(position).x - 1,$"../TileMap".local_to_map(position).x + 1),randi_range($"../TileMap".local_to_map(position).y - 1,$"../TileMap".local_to_map(position).y + 1)))
+		if current_state == states.ALERT:
+			speed = 130
+			if focus:
+				path = astar.get_id_path($"../TileMap".local_to_map(position),$"../TileMap".local_to_map(focus.position))
 
 func _on_area_2d_body_entered(body):
 	if get_tree().get_nodes_in_group("enemies").has(body):
+		print(get_tree().get_nodes_in_group("enemies"))
+		print(raycast.get_collider())
+		focus = body
 		if get_tree().get_nodes_in_group("enemies").has(raycast.get_collider()): 
 			current_state = states.ATTACK
-			focus = body
+			print("WOW")
 			$alert_timer.start()
 			$alert_timer.stop()
 
 func _on_area_2d_body_exited(body):
 	if get_tree().get_nodes_in_group("enemies").has(body):
+		print("OH, NVM")
 		current_state = states.ALERT
-		focus = null
 		$alert_timer.start()
 
 func _on_alert_timer_timeout():
 	current_state = states.IDLE
-

@@ -2,12 +2,12 @@ extends TileMap
 var button_1 = false
 var button_2 = false
 var subtype = null
-var noise = FastNoiseLite.new()
 var click_1 = Vector2.ZERO
 var click_2 = Vector2.ZERO
 var selection_array = []
 var filled_area
 var os_name = OS.get_name()
+@onready var noise : NoiseGenerator = $NoiseGenerator
 
 var plants : Dictionary = {
 	
@@ -26,10 +26,15 @@ class types:
 	const plant = plant_types
 
 func check_mouse_collision(node : Node):
-	if node.get_global_mouse_position() - node.global_position >= 0 and node.get_global_mouse_position() - node.global_position <= node.size:
+	if (node.get_global_mouse_position() - node.global_position).x >= 0\
+	and (node.get_global_mouse_position() - node.global_position).y >= 0\
+	and (node.get_global_mouse_position() - node.global_position).x <= node.size.x\
+	and (node.get_global_mouse_position() - node.global_position).y <= node.size.y:
 		return true
+		print("check returned true")
 	else:
 		return false
+		print("check returned false")
 
 func fill_area(pos_1 : Vector2i,pos_2 : Vector2i, fill : bool, layer : int, terrain_set : int, terrain : int, solid : bool):
 	var fill_rect = Rect2(pos_1,pos_2 - pos_1).abs()
@@ -53,20 +58,7 @@ func fill_area(pos_1 : Vector2i,pos_2 : Vector2i, fill : bool, layer : int, terr
 	return fill_array
 
 func _ready():
-	noise.noise_type = FastNoiseLite.TYPE_PERLIN
-	noise.seed = randi()
-	noise.frequency = 0.2
-	
-	for i in WorldCreation.world_size:
-		for n in WorldCreation.world_size:
-			if noise.get_noise_2d(i,n) < -0.3:
-				set_cells_terrain_connect(0,[Vector2i(i,n)],0,3,false)
-			elif noise.get_noise_2d(i,n) < -0.1:
-				set_cells_terrain_connect(0,[Vector2i(i,n)],0,2,false)
-			elif noise.get_noise_2d(i,n) < 0.7:
-				set_cells_terrain_connect(0,[Vector2i(i,n)],0,1,false)
-			elif noise.get_noise_2d(i,n) < 1:
-				set_cells_terrain_connect(0,[Vector2i(i,n)],0,0,false)
+	noise.generate()
 
 func _process(delta):
 	if check_mouse_collision($"../Control/CanvasLayer/selection_buttons_rect")\
@@ -126,7 +118,6 @@ func _on_brussels_planting_toggled(toggled_on):
 		subtype = types.plant.brussels
 #endregion
 func _on_crop_timer_timeout():
-	print("growing")
 	for i in plants.size():
 		if plants[plants.keys()[i]] < 100:
 			plants[plants.keys()[i]] = plants[plants.keys()[i]] + 1
@@ -136,4 +127,3 @@ func _on_crop_timer_timeout():
 			set_cell(1,plants.keys()[i],4,Vector2(0,1))
 		elif plants[plants.keys()[i]] == 100 :
 			set_cell(1,plants.keys()[i],4,Vector2(1,1))
-
