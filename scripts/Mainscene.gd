@@ -1,4 +1,7 @@
 extends Node2D
-
+var saved_scene = PackedScene.new()
+var dir_access = DirAccess.open("res://")
 func _on_button_pressed():
-	get_tree().change_scene_to_file("res://scenes/menu.tscn")
+	$Control/popup_layer/pause_menu.show()
+	$Control/popup_layer/Panel3.show()
+	get_tree().paused = true

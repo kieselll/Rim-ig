@@ -1,129 +1,32 @@
 extends TileMap
-var button_1 = false
-var button_2 = false
+@onready var button_1 = $"../Control/CanvasLayer/ui_buttons/build_toggle_button".button_pressed
+@onready var button_2 = $"../Control/CanvasLayer/ui_buttons/colonists_button_toggle".button_pressed
 var subtype = null
-var click_1 = Vector2.ZERO
-var click_2 = Vector2.ZERO
 var selection_array = []
 var filled_area
 var os_name = OS.get_name()
-@onready var noise : NoiseGenerator = $NoiseGenerator
-
-var plants : Dictionary = {
-	
-}
-
-class wall_types:
-	const remove = Vector2(0,0)
-	const wood = Vector2(0,1)
-
-class plant_types:
-	const remove = Vector2(1,0)
-	const brussels = Vector2(1,1)
-
-class types:
-	const wall = wall_types
-	const plant = plant_types
+var selection_texture = preload("res://textures/tilesets/selection_tile.png")
 
 func check_mouse_collision(node : Node):
-	if (node.get_global_mouse_position() - node.global_position).x >= 0\
-	and (node.get_global_mouse_position() - node.global_position).y >= 0\
-	and (node.get_global_mouse_position() - node.global_position).x <= node.size.x\
-	and (node.get_global_mouse_position() - node.global_position).y <= node.size.y:
+	var node_rect = Rect2(Vector2(0,0),node.size)
+	if node_rect.has_point(node.get_local_mouse_position()):
 		return true
-		print("check returned true")
 	else:
 		return false
-		print("check returned false")
 
-func fill_area(pos_1 : Vector2i,pos_2 : Vector2i, fill : bool, layer : int, terrain_set : int, terrain : int, solid : bool):
-	var fill_rect = Rect2(pos_1,pos_2 - pos_1).abs()
-	var fill_array : Array
-	if fill == true:
-		for i in range(fill_rect.position.x,fill_rect.position.x + fill_rect.size.x + 1,1):
-			for j in range(fill_rect.position.y,fill_rect.position.y + fill_rect.size.y + 1,1):
-				fill_array.append(Vector2(i,j))
-		set_cells_terrain_connect(layer,fill_array,terrain_set,terrain)
-		$"../test_pawn".astar.fill_solid_region(fill_rect,solid)
-	else:
-		for i in range(fill_rect.position.x,fill_rect.position.x + fill_rect.size.x + 1,1):
-			fill_array.append(Vector2(i,fill_rect.position.y))
-			fill_array.append(Vector2(i,fill_rect.position.y + fill_rect.size.y))
-		for i in range(fill_rect.position.y,fill_rect.position.y + fill_rect.size.y + 1,1):
-			fill_array.append(Vector2(fill_rect.position.x,i))
-			fill_array.append(Vector2(fill_rect.position.x + fill_rect.size.x,i))
-		set_cells_terrain_connect(layer,fill_array,terrain_set,terrain)
-		for i in fill_array.size():
-			$"../test_pawn".astar.set_point_solid(fill_array.pop_back(),solid)
-	return fill_array
-
-func _ready():
-	noise.generate()
+func _ready() -> void:
+	var total_cell_array : Array
+	var light_cell_array : Array
 
 func _process(delta):
 	if check_mouse_collision($"../Control/CanvasLayer/selection_buttons_rect")\
-	or check_mouse_collision($"../Control/CanvasLayer/selection_buttons_rect/grid_rect")\
+	or check_mouse_collision($"../Control/CanvasLayer/selection_buttons_rect/HBoxContainer/list_rect")\
 	or check_mouse_collision($"../Control/CanvasLayer/ui_buttons"):
-		WorldCreation.button_hover = true
+		Global.button_hover = true
 	elif os_name == "Android":
 		if check_mouse_collision($"../Control/CanvasLayer/movement_buttons")\
 		or check_mouse_collision($"../Control/CanvasLayer/zoom_buttons"):
-			WorldCreation.button_hover = true
+			Global.button_hover = true
 	else:
-		WorldCreation.button_hover = false
-	if Input.is_action_just_pressed("check"):
-		print(plants[Vector2(local_to_map(get_global_mouse_position()).x,local_to_map(get_global_mouse_position()).y)])
-func _input(event):
-	if button_1 == true and event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and WorldCreation.button_hover == false and not subtype == null:
-		if event.pressed:
-			click_1 = local_to_map(get_global_mouse_position())
-			print(click_1)
-		if not event.pressed:
-			click_2 = local_to_map(get_global_mouse_position())
-			print(click_2)
-			if subtype.x == 0:
-				if subtype.y == 1:
-					fill_area(click_1,click_2,false,1,1,0,true)
-				elif subtype.y == 0:
-					filled_area = fill_area(click_1,click_2,true,1,1,-1,true)
-					for i in filled_area.size():
-						plants.erase(filled_area[i])
-			elif subtype.x == 1:
-				filled_area = fill_area(click_1,click_2,true,1,1,1,false)
-				for i in filled_area.size():
-					if not plants.has(filled_area[i]):
-						plants[filled_area[i]] = 0
-			click_1 = Vector2.ZERO
-			click_2 = Vector2.ZERO
-			selection_array = []
-			filled_area = []
-
-#region button_detection
-func _on_button_2_toggled(toggled_on):
-	button_2 = toggled_on
-	
-func _on_button_toggled(toggled_on):
-	button_1 = toggled_on
-
-func _on_woodwall_toggled(toggled_on):
-	if toggled_on == true:
-		subtype = types.wall.wood
-
-func _on_wallremove_toggled(toggled_on):
-	if toggled_on == true:
-		subtype = types.wall.remove
-
-func _on_brussels_planting_toggled(toggled_on):
-	if toggled_on == true:
-		subtype = types.plant.brussels
-#endregion
-func _on_crop_timer_timeout():
-	for i in plants.size():
-		if plants[plants.keys()[i]] < 100:
-			plants[plants.keys()[i]] = plants[plants.keys()[i]] + 1
-		if plants[plants.keys()[i]] == 33:
-			set_cell(1,plants.keys()[i],4,Vector2(1,0))
-		elif plants[plants.keys()[i]] == 66 :
-			set_cell(1,plants.keys()[i],4,Vector2(0,1))
-		elif plants[plants.keys()[i]] == 100 :
-			set_cell(1,plants.keys()[i],4,Vector2(1,1))
+		Global.button_hover = false
+		
