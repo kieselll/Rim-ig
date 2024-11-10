@@ -23,6 +23,9 @@ class pawn_trait:
 	"happiness": 100
 }
 @export var traits = []
+@export var abilities = {
+	"building" = 0
+}
 
 func get_stat(stat : String):
 	if stats.has(stat):

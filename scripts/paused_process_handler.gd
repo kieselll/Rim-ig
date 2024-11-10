@@ -1,5 +1,5 @@
 extends Node
-var dir_access = DirAccess.open(Global.save_location)
+var dir_access = DirAccess.open(Global.game_location+"/saves")
 
 func _on_resume_button_pressed() -> void:
 	$"../Control/popup_layer/pause_menu".hide()

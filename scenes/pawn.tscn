@@ -1,0 +1,121 @@
+[gd_scene load_steps=13 format=3 uid="uid://b46j0js042i4q"]
+
+[ext_resource type="Script" path="res://scripts/CharacterBody2D.gd" id="1_88j76"]
+[ext_resource type="Script" path="res://resources/resource_scripts/pawn_stat_resouce.gd" id="2_tucm2"]
+[ext_resource type="Texture2D" uid="uid://supgli3ajes5" path="res://man.png" id="3_ucej0"]
+[ext_resource type="Texture2D" uid="uid://cjq2kpjxx88ae" path="res://textures/items/Untitled 08-08-2024 08-47-15.png" id="4_og358"]
+[ext_resource type="Script" path="res://scripts/state_machine.gd" id="5_tvxll"]
+
+[sub_resource type="Resource" id="Resource_ls40f"]
+resource_local_to_scene = true
+script = ExtResource("2_tucm2")
+personality = 2
+stats = {
+"happiness": 0,
+"health": 100,
+"tiredness": 100
+}
+traits = []
+abilities = {
+"building": 0
+}
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_taskf"]
+radius = 9.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_e1raa"]
+radius = 151.855
+
+[sub_resource type="Gradient" id="Gradient_a2uu4"]
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_j4afd"]
+gradient = SubResource("Gradient_a2uu4")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(1, 0.482906)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bqii1"]
+bg_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+expand_margin_left = 1.0
+expand_margin_top = 1.0
+expand_margin_right = 1.0
+expand_margin_bottom = 1.0
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_a4pcm"]
+bg_color = Color(0.44752, 0.680588, 0.116297, 1)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+anti_aliasing = false
+
+[node name="test_pawn" type="CharacterBody2D" groups=["teammates"]]
+scale = Vector2(0.5, 0.5)
+safe_margin = 0.12
+script = ExtResource("1_88j76")
+characteristics = SubResource("Resource_ls40f")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -0.5)
+shape = SubResource("CapsuleShape2D_taskf")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+z_index = 2
+texture_filter = 1
+texture = ExtResource("3_ucej0")
+
+[node name="RayCast2D" type="RayCast2D" parent="."]
+target_position = Vector2(0, 0)
+
+[node name="Sprite2D2" type="Sprite2D" parent="."]
+z_index = 2
+texture_filter = 1
+position = Vector2(-4, 3)
+texture = ExtResource("4_og358")
+
+[node name="alert_timer" type="Timer" parent="."]
+wait_time = 30.0
+one_shot = true
+
+[node name="state_machine" type="Node" parent="."]
+editor_description = "This thing will probably take me weeks to make"
+script = ExtResource("5_tvxll")
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CircleShape2D_e1raa")
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
+position = Vector2(3.05176e-05, 3.05176e-05)
+energy = 0.78
+shadow_enabled = true
+shadow_filter = 1
+shadow_filter_smooth = 5.0
+texture = SubResource("GradientTexture2D_j4afd")
+
+[node name="Panel" type="Panel" parent="."]
+visible = false
+light_mask = 2
+z_index = 2
+offset_left = -20.0
+offset_top = -24.0
+offset_right = 20.0
+offset_bottom = -18.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_bqii1")
+
+[node name="Panel2" type="Panel" parent="Panel"]
+light_mask = 2
+offset_left = 1.0
+offset_top = 1.0
+offset_right = 2.0
+offset_bottom = 5.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_a4pcm")
+
+[connection signal="timeout" from="alert_timer" to="." method="_on_alert_timer_timeout"]

@@ -22,21 +22,12 @@ config/icon="res://textures/ui/Untitled 08-08-2024 07-18-10.png"
 [autoload]
 
 Preload="*res://scenes/preload.tscn"
-Global="*res://scripts/world_creation.gd"
-
-[debug]
-
-settings/stdout/print_fps=true
+Global="*res://scripts/Global.gd"
 
 [display]
 
 window/vsync/vsync_mode=0
 mouse_cursor/custom_image="res://textures/ui/cursor.png"
-
-[editor]
-
-version_control/plugin_name="GitPlugin"
-version_control/autoload_on_startup=true
 
 [gui]
 
@@ -93,12 +84,9 @@ test={
 ]
 }
 
-[input_devices]
-
-pointing/android/enable_long_press_as_right_click=true
-
 [rendering]
 
 textures/canvas_textures/default_texture_filter=0
 renderer/rendering_method="mobile"
+textures/vram_compression/import_etc2_astc=true
 environment/defaults/default_clear_color=Color(0.0728426, 0.0728427, 0.0728426, 1)

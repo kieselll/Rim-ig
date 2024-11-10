@@ -398,116 +398,116 @@ layout_mode = 2
 theme_override_styles/separator = SubResource("StyleBoxEmpty_7rvjq")
 metadata/_edit_group_ = true
 
-[node name="WindowType" type="HBoxContainer" parent="Tabs/Keycodes/ScrollContainer/VBoxContainer"]
+[node name="up" type="HBoxContainer" parent="Tabs/Keycodes/ScrollContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="move_up_label" type="Label" parent="Tabs/Keycodes/ScrollContainer/VBoxContainer/WindowType"]
+[node name="move_up_label" type="Label" parent="Tabs/Keycodes/ScrollContainer/VBoxContainer/up"]
 layout_mode = 2
 text = "Move up"
 horizontal_alignment = 1
 metadata/_edit_group_ = true
 
-[node name="reset_button" type="TextureButton" parent="Tabs/Keycodes/ScrollContainer/VBoxContainer/WindowType"]
+[node name="reset_button" type="TextureButton" parent="Tabs/Keycodes/ScrollContainer/VBoxContainer/up"]
 layout_mode = 2
 texture_normal = ExtResource("2_j3x8n")
 
-[node name="keycode_label" type="Label" parent="Tabs/Keycodes/ScrollContainer/VBoxContainer/WindowType"]
+[node name="keycode_label" type="Label" parent="Tabs/Keycodes/ScrollContainer/VBoxContainer/up"]
 layout_mode = 2
 theme_override_styles/normal = SubResource("StyleBoxFlat_g2c6b")
 horizontal_alignment = 1
 metadata/_edit_group_ = true
 
-[node name="WindowType2" type="HBoxContainer" parent="Tabs/Keycodes/ScrollContainer/VBoxContainer"]
+[node name="left" type="HBoxContainer" parent="Tabs/Keycodes/ScrollContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="move_left_label" type="Label" parent="Tabs/Keycodes/ScrollContainer/VBoxContainer/WindowType2"]
+[node name="move_left_label" type="Label" parent="Tabs/Keycodes/ScrollContainer/VBoxContainer/left"]
 layout_mode = 2
 text = "Move left"
 horizontal_alignment = 1
 metadata/_edit_group_ = true
 
-[node name="reset_button" type="TextureButton" parent="Tabs/Keycodes/ScrollContainer/VBoxContainer/WindowType2"]
+[node name="reset_button" type="TextureButton" parent="Tabs/Keycodes/ScrollContainer/VBoxContainer/left"]
 layout_mode = 2
 texture_normal = ExtResource("2_j3x8n")
 
-[node name="keycode_label" type="Label" parent="Tabs/Keycodes/ScrollContainer/VBoxContainer/WindowType2"]
+[node name="keycode_label" type="Label" parent="Tabs/Keycodes/ScrollContainer/VBoxContainer/left"]
 layout_mode = 2
 theme_override_styles/normal = SubResource("StyleBoxFlat_g2c6b")
 horizontal_alignment = 1
 metadata/_edit_group_ = true
 
-[node name="WindowType3" type="HBoxContainer" parent="Tabs/Keycodes/ScrollContainer/VBoxContainer"]
+[node name="down" type="HBoxContainer" parent="Tabs/Keycodes/ScrollContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="move_down_label" type="Label" parent="Tabs/Keycodes/ScrollContainer/VBoxContainer/WindowType3"]
+[node name="move_down_label" type="Label" parent="Tabs/Keycodes/ScrollContainer/VBoxContainer/down"]
 layout_mode = 2
 text = "Move down"
 horizontal_alignment = 1
 metadata/_edit_group_ = true
 
-[node name="reset_button" type="TextureButton" parent="Tabs/Keycodes/ScrollContainer/VBoxContainer/WindowType3"]
+[node name="reset_button" type="TextureButton" parent="Tabs/Keycodes/ScrollContainer/VBoxContainer/down"]
 layout_mode = 2
 texture_normal = ExtResource("2_j3x8n")
 
-[node name="keycode_label" type="Label" parent="Tabs/Keycodes/ScrollContainer/VBoxContainer/WindowType3"]
+[node name="keycode_label" type="Label" parent="Tabs/Keycodes/ScrollContainer/VBoxContainer/down"]
 layout_mode = 2
 theme_override_styles/normal = SubResource("StyleBoxFlat_g2c6b")
 horizontal_alignment = 1
 metadata/_edit_group_ = true
 
-[node name="WindowType4" type="HBoxContainer" parent="Tabs/Keycodes/ScrollContainer/VBoxContainer"]
+[node name="right" type="HBoxContainer" parent="Tabs/Keycodes/ScrollContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="move_right_label" type="Label" parent="Tabs/Keycodes/ScrollContainer/VBoxContainer/WindowType4"]
+[node name="move_right_label" type="Label" parent="Tabs/Keycodes/ScrollContainer/VBoxContainer/right"]
 layout_mode = 2
 text = "Move right"
 horizontal_alignment = 1
 metadata/_edit_group_ = true
 
-[node name="reset_button" type="TextureButton" parent="Tabs/Keycodes/ScrollContainer/VBoxContainer/WindowType4"]
+[node name="reset_button" type="TextureButton" parent="Tabs/Keycodes/ScrollContainer/VBoxContainer/right"]
 layout_mode = 2
 texture_normal = ExtResource("2_j3x8n")
 
-[node name="keycode_label" type="Label" parent="Tabs/Keycodes/ScrollContainer/VBoxContainer/WindowType4"]
+[node name="keycode_label" type="Label" parent="Tabs/Keycodes/ScrollContainer/VBoxContainer/right"]
 layout_mode = 2
 theme_override_styles/normal = SubResource("StyleBoxFlat_g2c6b")
 horizontal_alignment = 1
 metadata/_edit_group_ = true
 
-[node name="WindowType5" type="HBoxContainer" parent="Tabs/Keycodes/ScrollContainer/VBoxContainer"]
+[node name="zoom_in" type="HBoxContainer" parent="Tabs/Keycodes/ScrollContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="zoom_in_label" type="Label" parent="Tabs/Keycodes/ScrollContainer/VBoxContainer/WindowType5"]
+[node name="zoom_in_label" type="Label" parent="Tabs/Keycodes/ScrollContainer/VBoxContainer/zoom_in"]
 layout_mode = 2
 text = "Zoom in"
 horizontal_alignment = 1
 metadata/_edit_group_ = true
 
-[node name="reset_button" type="TextureButton" parent="Tabs/Keycodes/ScrollContainer/VBoxContainer/WindowType5"]
+[node name="reset_button" type="TextureButton" parent="Tabs/Keycodes/ScrollContainer/VBoxContainer/zoom_in"]
 layout_mode = 2
 texture_normal = ExtResource("2_j3x8n")
 
-[node name="keycode_label" type="Label" parent="Tabs/Keycodes/ScrollContainer/VBoxContainer/WindowType5"]
+[node name="keycode_label" type="Label" parent="Tabs/Keycodes/ScrollContainer/VBoxContainer/zoom_in"]
 layout_mode = 2
 theme_override_styles/normal = SubResource("StyleBoxFlat_g2c6b")
 text = "Mouse wheel up (default)"
 horizontal_alignment = 1
 metadata/_edit_group_ = true
 
-[node name="WindowType6" type="HBoxContainer" parent="Tabs/Keycodes/ScrollContainer/VBoxContainer"]
+[node name="zoom_out" type="HBoxContainer" parent="Tabs/Keycodes/ScrollContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="zoom_out_label" type="Label" parent="Tabs/Keycodes/ScrollContainer/VBoxContainer/WindowType6"]
+[node name="zoom_out_label" type="Label" parent="Tabs/Keycodes/ScrollContainer/VBoxContainer/zoom_out"]
 layout_mode = 2
 text = "Zoom out"
 horizontal_alignment = 1
 metadata/_edit_group_ = true
 
-[node name="reset_button" type="TextureButton" parent="Tabs/Keycodes/ScrollContainer/VBoxContainer/WindowType6"]
+[node name="reset_button" type="TextureButton" parent="Tabs/Keycodes/ScrollContainer/VBoxContainer/zoom_out"]
 layout_mode = 2
 texture_normal = ExtResource("2_j3x8n")
 
-[node name="keycode_label" type="Label" parent="Tabs/Keycodes/ScrollContainer/VBoxContainer/WindowType6"]
+[node name="keycode_label" type="Label" parent="Tabs/Keycodes/ScrollContainer/VBoxContainer/zoom_out"]
 layout_mode = 2
 theme_override_styles/normal = SubResource("StyleBoxFlat_g2c6b")
 text = "Mouse wheel down (default)"
@@ -672,13 +672,13 @@ layout_mode = 2
 theme_override_styles/separator = SubResource("StyleBoxEmpty_7rvjq")
 metadata/_edit_group_ = true
 
-[node name="autoasave_frequency_label" type="Label" parent="Tabs/Saves/ScrollContainer/VBoxContainer"]
+[node name="autosave_frequency_label" type="Label" parent="Tabs/Saves/ScrollContainer/VBoxContainer"]
 layout_mode = 2
 text = "Autosave frequency"
 horizontal_alignment = 1
 metadata/_edit_group_ = true
 
-[node name="autoasave_frequency_slider" type="HSlider" parent="Tabs/Saves/ScrollContainer/VBoxContainer"]
+[node name="autosave_frequency_slider" type="HSlider" parent="Tabs/Saves/ScrollContainer/VBoxContainer"]
 layout_mode = 2
 theme = ExtResource("1_ngyiw")
 theme_override_styles/slider = SubResource("StyleBoxLine_bbbdu")
@@ -747,5 +747,22 @@ icon = ExtResource("3_q0xjj")
 [connection signal="item_selected" from="Tabs/Graphics/ScrollContainer/VBoxContainer/frame_rate_limit/frame_rate_limit_selector" to="." method="_on_frame_rate_limit_selector_item_selected"]
 [connection signal="value_changed" from="Tabs/Graphics/ScrollContainer/VBoxContainer/particle_amount_slider" to="." method="_on_particle_amount_slider_value_changed"]
 [connection signal="value_changed" from="Tabs/Graphics/ScrollContainer/VBoxContainer/brightness_slider" to="." method="_on_brightness_slider_value_changed"]
+[connection signal="item_selected" from="Tabs/Gameplay/ScrollContainer/VBoxContainer/default_difficulty/default_difficulty_selector" to="." method="_on_default_difficulty_selector_item_selected"]
+[connection signal="value_changed" from="Tabs/Controls/ScrollContainer/VBoxContainer/camera_move_sensitivity_slider" to="." method="_on_camera_move_sensitivity_slider_value_changed"]
+[connection signal="value_changed" from="Tabs/Controls/ScrollContainer/VBoxContainer/camera_zoom_sensitivity_slider" to="." method="_on_camera_zoom_sensitivity_slider_value_changed"]
+[connection signal="toggled" from="Tabs/Controls/ScrollContainer/VBoxContainer/invert_camera_movement_toggle" to="." method="_on_invert_camera_movement_toggle_toggled"]
+[connection signal="toggled" from="Tabs/Controls/ScrollContainer/VBoxContainer/invert_zoom_camera_movement_toggle" to="." method="_on_invert_zoom_camera_movement_toggle_toggled"]
+[connection signal="toggled" from="Tabs/Controls/ScrollContainer/VBoxContainer/invert_camera_zoom_toggle" to="." method="_on_invert_camera_zoom_toggle_toggled"]
+[connection signal="pressed" from="Tabs/Keycodes/ScrollContainer/VBoxContainer/up/reset_button" to="." method="_on_up_reset_button_pressed"]
+[connection signal="pressed" from="Tabs/Keycodes/ScrollContainer/VBoxContainer/left/reset_button" to="." method="_on_left_reset_button_pressed"]
+[connection signal="pressed" from="Tabs/Keycodes/ScrollContainer/VBoxContainer/down/reset_button" to="." method="_on_down_reset_button_pressed"]
+[connection signal="pressed" from="Tabs/Keycodes/ScrollContainer/VBoxContainer/right/reset_button" to="." method="_on_right_reset_button_pressed"]
+[connection signal="pressed" from="Tabs/Keycodes/ScrollContainer/VBoxContainer/zoom_in/reset_button" to="." method="_on_zoom_in_reset_button_pressed"]
+[connection signal="pressed" from="Tabs/Keycodes/ScrollContainer/VBoxContainer/zoom_out/reset_button" to="." method="_on_zoom_out_reset_button_pressed"]
+[connection signal="value_changed" from="Tabs/Audio/ScrollContainer/VBoxContainer/main_volume_slider" to="." method="_on_main_volume_slider_value_changed"]
+[connection signal="value_changed" from="Tabs/Audio/ScrollContainer/VBoxContainer/sfx_volume_slider" to="." method="_on_sfx_volume_slider_value_changed"]
+[connection signal="value_changed" from="Tabs/Audio/ScrollContainer/VBoxContainer/music_volume_slider" to="." method="_on_music_volume_slider_value_changed"]
+[connection signal="text_changed" from="Tabs/Saves/ScrollContainer/VBoxContainer/WindowType/path_line_edit" to="." method="_on_path_line_edit_text_changed"]
+[connection signal="value_changed" from="Tabs/Saves/ScrollContainer/VBoxContainer/autosave_frequency_slider" to="." method="_on_autosave_frequency_slider_value_changed"]
 [connection signal="pressed" from="save_button" to="." method="_on_save_button_pressed"]
 [connection signal="pressed" from="cancel_button" to="." method="_on_cancel_button_pressed"]

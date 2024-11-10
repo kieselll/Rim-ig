@@ -29,4 +29,3 @@ func _process(delta):
 			Global.button_hover = true
 	else:
 		Global.button_hover = false
-		

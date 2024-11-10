@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c24slnedkmhwq"
-path="res://.godot/imported/Untitled 08-25-2024 01-28-39 (9).png-691c241dc76f50b38a49e8ef7268cbbc.ctex"
+uid="uid://3yptqw3sssvn"
+path="res://.godot/imported/apple.jpg-8b4d03f0193a859c86e2f0f03e368896.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://textures/tilesets/Untitled 08-25-2024 01-28-39 (9).png"
-dest_files=["res://.godot/imported/Untitled 08-25-2024 01-28-39 (9).png-691c241dc76f50b38a49e8ef7268cbbc.ctex"]
+source_file="res://textures/ui/apple.jpg"
+dest_files=["res://.godot/imported/apple.jpg-8b4d03f0193a859c86e2f0f03e368896.ctex"]
 
 [params]
 
