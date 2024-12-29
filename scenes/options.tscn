@@ -1,10 +1,12 @@
-[gd_scene load_steps=12 format=3 uid="uid://c8mjqvqebyeop"]
+[gd_scene load_steps=16 format=3 uid="uid://c8mjqvqebyeop"]
 
 [ext_resource type="Script" path="res://scenes/option_script.gd" id="1_3x372"]
 [ext_resource type="Theme" uid="uid://qb0c3yxrvyka" path="res://resources/theme.tres" id="1_ngyiw"]
 [ext_resource type="Texture2D" uid="uid://hm5h16w6fohb" path="res://textures/ui/save_icon.png" id="2_glwxp"]
 [ext_resource type="Texture2D" uid="uid://ctfh13uxsygl0" path="res://textures/ui/reset_key.png" id="2_j3x8n"]
 [ext_resource type="Texture2D" uid="uid://dfjy36vg8cx26" path="res://textures/ui/delete_save_icon.png" id="3_q0xjj"]
+[ext_resource type="Texture2D" uid="uid://dhq6ejmpibuub" path="res://textures/ui/resume_icon.png" id="6_3umgy"]
+[ext_resource type="Shader" path="res://scenes/inverted_blur.gdshader" id="7_k76y8"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_k6s36"]
 content_margin_left = 50.0
@@ -43,6 +45,13 @@ border_width_right = 2
 border_width_bottom = 2
 border_color = Color(0.0627451, 0.0627451, 0.0627451, 1)
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_jujcu"]
+shader = ExtResource("7_k76y8")
+shader_parameter/lod = 1.318
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_am740"]
+bg_color = Color(0, 0, 0, 0.876)
+
 [node name="Control" type="Control"]
 layout_mode = 3
 anchors_preset = 15
@@ -63,10 +72,9 @@ offset_right = -20.0
 offset_bottom = -20.0
 grow_horizontal = 2
 grow_vertical = 2
-current_tab = 5
+current_tab = 0
 
 [node name="Graphics" type="PanelContainer" parent="Tabs"]
-visible = false
 layout_mode = 2
 theme = ExtResource("1_ngyiw")
 theme_override_styles/panel = SubResource("StyleBoxFlat_k6s36")
@@ -84,7 +92,7 @@ theme = ExtResource("1_ngyiw")
 
 [node name="screen" type="Label" parent="Tabs/Graphics/ScrollContainer/VBoxContainer"]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.675856, 0.766386, 0.893801, 1)
+theme_override_colors/font_color = Color(0.577198, 0.846257, 0.426967, 1)
 theme_override_font_sizes/font_size = 25
 text = "Screen"
 horizontal_alignment = 1
@@ -109,51 +117,11 @@ metadata/_edit_group_ = true
 custom_minimum_size = Vector2(150, 0)
 layout_mode = 2
 size_flags_horizontal = 2
-selected = 2
-item_count = 3
-popup/item_0/text = "True fullscreen"
-popup/item_1/text = "Fullscreen window"
+selected = 0
+item_count = 2
+popup/item_0/text = "Fullscreen window"
+popup/item_1/text = "Windowed"
 popup/item_1/id = 1
-popup/item_2/text = "Windowed"
-popup/item_2/id = 2
-metadata/_edit_group_ = true
-
-[node name="window_resulotion" type="HBoxContainer" parent="Tabs/Graphics/ScrollContainer/VBoxContainer"]
-layout_mode = 2
-
-[node name="window_resulotion_label" type="Label" parent="Tabs/Graphics/ScrollContainer/VBoxContainer/window_resulotion"]
-layout_mode = 2
-text = "Window resulotion"
-horizontal_alignment = 1
-metadata/_edit_group_ = true
-
-[node name="window_resulotion_selector" type="OptionButton" parent="Tabs/Graphics/ScrollContainer/VBoxContainer/window_resulotion"]
-custom_minimum_size = Vector2(150, 0)
-layout_mode = 2
-size_flags_horizontal = 2
-selected = 10
-item_count = 11
-popup/item_0/text = "640x360"
-popup/item_1/text = "768x432"
-popup/item_1/id = 1
-popup/item_2/text = "896x504"
-popup/item_2/id = 2
-popup/item_3/text = "1024x576"
-popup/item_3/id = 3
-popup/item_4/text = "1152x648"
-popup/item_4/id = 4
-popup/item_5/text = "1280x720"
-popup/item_5/id = 5
-popup/item_6/text = "1408x792"
-popup/item_6/id = 6
-popup/item_7/text = "1536x864"
-popup/item_7/id = 7
-popup/item_8/text = "1664x936"
-popup/item_8/id = 8
-popup/item_9/text = "1792x1008"
-popup/item_9/id = 9
-popup/item_10/text = "1920x1080"
-popup/item_10/id = 10
 metadata/_edit_group_ = true
 
 [node name="frame_rate_limit" type="HBoxContainer" parent="Tabs/Graphics/ScrollContainer/VBoxContainer"]
@@ -165,20 +133,9 @@ text = "Frame rate limit"
 horizontal_alignment = 1
 metadata/_edit_group_ = true
 
-[node name="frame_rate_limit_selector" type="OptionButton" parent="Tabs/Graphics/ScrollContainer/VBoxContainer/frame_rate_limit"]
-custom_minimum_size = Vector2(150, 0)
+[node name="custom_fps_limit" type="SpinBox" parent="Tabs/Graphics/ScrollContainer/VBoxContainer/frame_rate_limit"]
 layout_mode = 2
-size_flags_horizontal = 2
-selected = 1
-item_count = 4
-popup/item_0/text = "30 FPS"
-popup/item_1/text = "60 FPS"
-popup/item_1/id = 1
-popup/item_2/text = "90 FPS"
-popup/item_2/id = 2
-popup/item_3/text = "120 FPS"
-popup/item_3/id = 3
-metadata/_edit_group_ = true
+max_value = 10000.0
 
 [node name="separator2" type="HSeparator" parent="Tabs/Graphics/ScrollContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 20)
@@ -188,7 +145,7 @@ metadata/_edit_group_ = true
 
 [node name="Details" type="Label" parent="Tabs/Graphics/ScrollContainer/VBoxContainer"]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.675856, 0.766386, 0.893801, 1)
+theme_override_colors/font_color = Color(0.577198, 0.846257, 0.426967, 1)
 theme_override_font_sizes/font_size = 25
 text = "Details"
 horizontal_alignment = 1
@@ -248,7 +205,7 @@ size_flags_vertical = 3
 
 [node name="game" type="Label" parent="Tabs/Gameplay/ScrollContainer/VBoxContainer"]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.675856, 0.766386, 0.893801, 1)
+theme_override_colors/font_color = Color(0.577198, 0.846257, 0.426967, 1)
 theme_override_font_sizes/font_size = 25
 text = "Game"
 horizontal_alignment = 1
@@ -300,7 +257,7 @@ size_flags_vertical = 3
 
 [node name="camera" type="Label" parent="Tabs/Controls/ScrollContainer/VBoxContainer"]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.675856, 0.766386, 0.893801, 1)
+theme_override_colors/font_color = Color(0.577198, 0.846257, 0.426967, 1)
 theme_override_font_sizes/font_size = 25
 text = "Camera"
 horizontal_alignment = 1
@@ -387,7 +344,7 @@ size_flags_vertical = 3
 
 [node name="movement" type="Label" parent="Tabs/Keycodes/ScrollContainer/VBoxContainer"]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.675856, 0.766386, 0.893801, 1)
+theme_override_colors/font_color = Color(0.577198, 0.846257, 0.426967, 1)
 theme_override_font_sizes/font_size = 25
 text = "Movement"
 horizontal_alignment = 1
@@ -516,7 +473,7 @@ metadata/_edit_group_ = true
 
 [node name="building" type="Label" parent="Tabs/Keycodes/ScrollContainer/VBoxContainer"]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.675856, 0.766386, 0.893801, 1)
+theme_override_colors/font_color = Color(0.577198, 0.846257, 0.426967, 1)
 theme_override_font_sizes/font_size = 25
 text = "Building"
 horizontal_alignment = 1
@@ -563,7 +520,7 @@ size_flags_vertical = 3
 
 [node name="audio" type="Label" parent="Tabs/Audio/ScrollContainer/VBoxContainer"]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.675856, 0.766386, 0.893801, 1)
+theme_override_colors/font_color = Color(0.577198, 0.846257, 0.426967, 1)
 theme_override_font_sizes/font_size = 25
 text = "Audio"
 horizontal_alignment = 1
@@ -626,6 +583,7 @@ value = 100.0
 metadata/_edit_group_ = true
 
 [node name="Saves" type="PanelContainer" parent="Tabs"]
+visible = false
 layout_mode = 2
 theme = ExtResource("1_ngyiw")
 theme_override_styles/panel = SubResource("StyleBoxFlat_k6s36")
@@ -641,7 +599,7 @@ size_flags_vertical = 3
 
 [node name="game" type="Label" parent="Tabs/Saves/ScrollContainer/VBoxContainer"]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.675856, 0.766386, 0.893801, 1)
+theme_override_colors/font_color = Color(0.577198, 0.846257, 0.426967, 1)
 theme_override_font_sizes/font_size = 25
 text = "Game"
 horizontal_alignment = 1
@@ -695,7 +653,7 @@ metadata/_edit_group_ = true
 
 [node name="account" type="Label" parent="Tabs/Saves/ScrollContainer/VBoxContainer"]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.675856, 0.766386, 0.893801, 1)
+theme_override_colors/font_color = Color(0.577198, 0.846257, 0.426967, 1)
 theme_override_font_sizes/font_size = 25
 text = "Account"
 horizontal_alignment = 1
@@ -721,7 +679,7 @@ anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = -219.0
-offset_top = -42.0
+offset_top = -32.0
 offset_right = -32.0
 offset_bottom = -32.0
 grow_horizontal = 0
@@ -731,20 +689,57 @@ icon = ExtResource("2_glwxp")
 
 [node name="cancel_button" type="Button" parent="."]
 layout_mode = 1
-anchors_preset = -1
+anchors_preset = 3
+anchor_left = 1.0
 anchor_top = 1.0
+anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 32.0
-offset_top = -42.0
-offset_right = 219.0
+offset_left = -416.0
+offset_top = -59.0
+offset_right = -229.0
 offset_bottom = -32.0
+grow_horizontal = 0
 grow_vertical = 0
 text = "Cancel"
 icon = ExtResource("3_q0xjj")
 
+[node name="apply_button" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 31.0
+offset_top = -59.0
+offset_right = 85.0
+offset_bottom = -32.0
+grow_vertical = 0
+text = "Apply"
+icon = ExtResource("6_3umgy")
+
+[node name="Panel3" type="Panel" parent="."]
+visible = false
+z_index = -1
+material = SubResource("ShaderMaterial_jujcu")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Panel2" type="Panel" parent="Panel3"]
+z_index = 1
+layout_mode = 2
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_am740")
+
 [connection signal="item_selected" from="Tabs/Graphics/ScrollContainer/VBoxContainer/window_type/window_type_selector" to="." method="_on_window_type_selector_item_selected"]
-[connection signal="item_selected" from="Tabs/Graphics/ScrollContainer/VBoxContainer/window_resulotion/window_resulotion_selector" to="." method="_on_window_resulotion_selector_item_selected"]
-[connection signal="item_selected" from="Tabs/Graphics/ScrollContainer/VBoxContainer/frame_rate_limit/frame_rate_limit_selector" to="." method="_on_frame_rate_limit_selector_item_selected"]
+[connection signal="value_changed" from="Tabs/Graphics/ScrollContainer/VBoxContainer/frame_rate_limit/custom_fps_limit" to="." method="_on_custom_fps_limit_value_changed"]
 [connection signal="value_changed" from="Tabs/Graphics/ScrollContainer/VBoxContainer/particle_amount_slider" to="." method="_on_particle_amount_slider_value_changed"]
 [connection signal="value_changed" from="Tabs/Graphics/ScrollContainer/VBoxContainer/brightness_slider" to="." method="_on_brightness_slider_value_changed"]
 [connection signal="item_selected" from="Tabs/Gameplay/ScrollContainer/VBoxContainer/default_difficulty/default_difficulty_selector" to="." method="_on_default_difficulty_selector_item_selected"]

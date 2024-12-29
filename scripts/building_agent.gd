@@ -26,7 +26,7 @@ var motion_event
 	light_masked_queued_d = $"../TileMap/light_masked_queued_d"
 }
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("rotate"):
 		rotate = !rotate
 	if rotate == true:
@@ -54,7 +54,12 @@ func fill_area(pos_1 : Vector2i, pos_2 : Vector2i, built_object,queued : bool):
 				fill_array.append(Vector2(fill_rect.position.x,j))
 				fill_array.append(Vector2(fill_rect.position.x + fill_rect.size.x,j))
 		if queued == true:
-			built_object.get_queued_layer_node(layers).set_cells_terrain_connect(fill_array,built_object.terrain_set,built_object.terrain_id)
+			if built_object == Global.buildables.walls.remove:
+				get_node("../TileMap/"+built_object.layer+"_queued_d").set_cells_terrain_connect(fill_array,built_object.terrain_set,0)
+			elif built_object == Global.buildables.terrain.remove:
+				get_node("../TileMap/"+built_object.layer+"_queued_d").set_cells_terrain_connect(fill_array,built_object.terrain_set,1)
+			else:
+				built_object.get_queued_layer_node(layers).set_cells_terrain_connect(fill_array,built_object.terrain_set,built_object.terrain_id)
 		else:
 			built_object.get_layer_node(layers).set_cells_terrain_connect(fill_array,built_object.terrain_set,built_object.terrain_id)
 		return fill_array
@@ -79,63 +84,93 @@ func get_rect_border_points(pos_1: Vector2, pos_2: Vector2) -> Array:
 
 func _input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion:
-		if click_1 and (current_item is Global.BuildableTerrain or current_item.id == -1):
-			get_tree().call_group("selection", "queue_free")
-			for i in get_rect_border_points(click_1,tilemap.local_to_map(tilemap.get_global_mouse_position())):
-				var sprite = Sprite2D.new()
-				sprite.position = tilemap.map_to_local(i)
-				sprite.texture = tilemap.selection_texture
-				sprite.scale = Vector2(16,16)
-				sprite.z_index = 2
-				sprite.add_to_group("selection")
-				add_child(sprite)
-		elif (current_item is Global.BuildableItem or current_item is Global.BuildableLightSource) and click_1:
-			get_tree().call_group("selection", "queue_free")
-			var sprite = Sprite2D.new()
-			sprite.position = tilemap.map_to_local(tilemap.local_to_map($"..".get_global_mouse_position()))
-			sprite.texture = tilemap.selection_texture
-			sprite.scale = Vector2(16,16)
-			sprite.z_index = 2
-			sprite.add_to_group("selection")
-			add_child(sprite)
-	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
-		if build_button == true and current_item and rotate == false:
-			if event.pressed and Global.button_hover == false:
-				click_1 = tilemap.local_to_map(tilemap.get_global_mouse_position()).clamp($"../TileMap/ground".get_used_rect().position,$"../TileMap/ground".get_used_rect().size)
-			if not event.pressed and click_1 != null:
-				get_tree().call_group("selection", "queue_free")
-				click_2 = tilemap.local_to_map(tilemap.get_global_mouse_position()).clamp($"../TileMap/ground".get_used_rect().position,$"../TileMap/ground".get_used_rect().size)
-				if current_item == Global.buildables.walls.remove:
-					filled_array = fill_area(click_1,click_2,current_item,true)
-					for i in filled_array:
-						if get_node_or_null("../TileMap/%s" % var_to_str(i)) != null:
-							get_node("../TileMap/%s" % var_to_str(i)).free()
-						Global.demolition_queue[i] = Global.buildables.walls.remove
-				elif current_item == Global.buildables.terrain.remove:
-					filled_array = fill_area(click_1,click_2,current_item,true)
-					for i : Vector2i in filled_array:
-						Global.demolition_queue[i] = Global.buildables.terrain.remove
-				elif current_item != null:
-					filled_array = fill_area(click_1,click_2,current_item,true)
-					for i : Vector2i in filled_array:
-						Global.building_queue[i] = current_item
-					if current_item is Global.BuildableLightSource:
-						if get_node_or_null("../TileMap/%s" % var_to_str(click_2)) == null:
-							var light_scene = load(current_item.light_scene).instantiate()
-							$"../TileMap".add_child(light_scene)
-							light_scene.position = current_item.get_layer_node(layers).map_to_local(click_2)
-							light_scene.name = var_to_str($"../TileMap".local_to_map(light_scene.position))
-				click_1 = null
-				click_2 = null
-	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed and not Global.button_hover and rotate:
-		var click = $"../TileMap".local_to_map($"../TileMap".get_global_mouse_position())
-		var tile_data = $"../TileMap/walls".get_cell_tile_data(click)
-		if tile_data and tile_data.get_custom_data("alternatives") > 0:
-			var current_alt = $"../TileMap/walls".get_cell_alternative_tile(click)
-			var next_alt = (current_alt + 1) % (tile_data.get_custom_data("alternatives") + 1)
-			$"../TileMap/walls".set_cell(click, $"../TileMap/walls".get_cell_source_id(click), $"../TileMap/walls".get_cell_atlas_coords(click), next_alt)
-			if Global.class_reference[tile_data.get_custom_data("class_reference")] is Global.BuildableLightSource:
-				get_node("../TileMap/%s" % var_to_str(click)).rotate(Global.class_reference[tile_data.get_custom_data("class_reference")].radians_per_alternative)
+		handle_mouse_motion()
+	elif event is InputEventMouseButton:
+		handle_mouse_button(event)
+
+func handle_mouse_motion() -> void:
+	if click_1:
+		get_tree().call_group("selection", "queue_free")
+		if current_item is Global.BuildableTerrain or current_item.id == -1:
+			for i in get_rect_border_points(click_1, tilemap.local_to_map(tilemap.get_global_mouse_position())):
+				create_selection_sprite(i)
+		elif current_item is Global.BuildableItem or current_item is Global.BuildableLightSource:
+			create_selection_sprite(tilemap.local_to_map(tilemap.get_global_mouse_position()))
+
+func create_selection_sprite(position: Vector2) -> void:
+	var sprite = Sprite2D.new()
+	sprite.position = tilemap.map_to_local(position)
+	sprite.texture = tilemap.selection_texture
+	sprite.scale = Vector2(16, 16)
+	sprite.z_index = 2
+	sprite.add_to_group("selection")
+	add_child(sprite)
+
+func handle_mouse_button(event: InputEventMouseButton) -> void:
+	if event.button_index == MOUSE_BUTTON_LEFT:
+		if build_button and current_item and not rotate:
+			if event.pressed and not Global.button_hover:
+				click_1 = tilemap.local_to_map(tilemap.get_global_mouse_position()).clamp(
+					$"../TileMap/ground".get_used_rect().position,
+					$"../TileMap/ground".get_used_rect().size
+				)
+			elif not event.pressed and click_1:
+				click_2 = tilemap.local_to_map(tilemap.get_global_mouse_position()).clamp(
+					$"../TileMap/ground".get_used_rect().position,
+					$"../TileMap/ground".get_used_rect().size
+				)
+				process_click_area()
+				reset_clicks()
+		elif event.pressed and not Global.button_hover and rotate:
+			handle_rotation()
+
+func process_click_area() -> void:
+	get_tree().call_group("selection", "queue_free")
+	filled_array = fill_area(click_1, click_2, current_item, true)
+	if current_item == Global.buildables.walls.remove:
+		handle_wall_removal(filled_array)
+	elif current_item == Global.buildables.terrain.remove:
+		handle_terrain_removal(filled_array)
+	else:
+		handle_building(filled_array)
+
+func handle_wall_removal(_filled_array: Array) -> void:
+	for i in _filled_array:
+		var node_path = "../TileMap/%s" % var_to_str(i)
+		if get_node_or_null(node_path):
+			get_node(node_path).free()
+		Global.demolition_queue[i] = Global.buildables.walls.remove
+
+func handle_terrain_removal(_filled_array: Array) -> void:
+	for i in _filled_array:
+		Global.demolition_queue[i] = Global.buildables.terrain.remove
+
+func handle_building(_filled_array: Array) -> void:
+	for i in _filled_array:
+		Global.building_queue[i] = current_item
+		print(Global.building_queue)
+	if current_item is Global.BuildableLightSource:
+		var click_pos_str = var_to_str(click_2)
+		if get_node_or_null("../TileMap/%s" % click_pos_str) == null:
+			var light_scene = load(current_item.light_scene).instantiate()
+			$"../TileMap".add_child(light_scene)
+			light_scene.position = current_item.get_layer_node(layers).map_to_local(click_2)
+			light_scene.name = var_to_str($"../TileMap".local_to_map(light_scene.position))
+
+func handle_rotation() -> void:
+	var click = $"../TileMap".local_to_map($"../TileMap".get_global_mouse_position())
+	var tile_data = $"../TileMap/walls".get_cell_tile_data(click)
+	if tile_data and tile_data.get_custom_data("alternatives") > 0:
+		var current_alt = $"../TileMap/walls".get_cell_alternative_tile(click)
+		var next_alt = (current_alt + 1) % (tile_data.get_custom_data("alternatives") + 1)
+		$"../TileMap/walls".set_cell(click, $"../TileMap/walls".get_cell_source_id(click), $"../TileMap/walls".get_cell_atlas_coords(click), next_alt)
+		if Global.class_reference[tile_data.get_custom_data("class_reference")] is Global.BuildableLightSource:
+			get_node("../TileMap/%s" % var_to_str(click)).rotate(Global.class_reference[tile_data.get_custom_data("class_reference")].radians_per_alternative)
+
+func reset_clicks() -> void:
+	click_1 = null
+	click_2 = null
+
 func _on_build_toggle_button_toggled(toggled_on: bool) -> void:
 	build_button = toggled_on
 

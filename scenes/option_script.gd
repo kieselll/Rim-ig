@@ -15,8 +15,7 @@ var changed_actions = {
 
 @onready var settings = {
 	"window_type" = $Tabs/Graphics/ScrollContainer/VBoxContainer/window_type/window_type_selector.selected,
-	"window_resolution" = $Tabs/Graphics/ScrollContainer/VBoxContainer/window_resulotion/window_resulotion_selector.selected,
-	"frame_rate_limit" = $Tabs/Graphics/ScrollContainer/VBoxContainer/frame_rate_limit/frame_rate_limit_selector.selected,
+	"frame_rate_limit" = $Tabs/Graphics/ScrollContainer/VBoxContainer/frame_rate_limit/custom_fps_limit.value,
 	"particle_amount" = $Tabs/Graphics/ScrollContainer/VBoxContainer/particle_amount_slider.value,
 	"brightness" = $Tabs/Graphics/ScrollContainer/VBoxContainer/brightness_slider.value,
 	
@@ -42,13 +41,27 @@ func erase_key(action : StringName) -> void:
 	get_node("Tabs/Keycodes/ScrollContainer/VBoxContainer/%s/keycode_label" % action).text = "Listening for input"
 	current_action = action
 
+func update_settings() -> void:
+	update_actions()
+	Engine.max_fps = settings["frame_rate_limit"]
+	match settings["window_type"]:
+		0:
+			get_window().mode = Window.MODE_EXCLUSIVE_FULLSCREEN
+		1:
+			get_window().mode = Window.MODE_WINDOWED
+			get_window().unresizable = true
+
+func update_actions() -> void:
+	for i in changed_actions.keys():
+		InputMap.action_erase_events(i)
+		InputMap.action_add_event(i,changed_actions[i])
+
 func _ready() -> void:
 	if dir_access.file_exists(Global.game_location+"/options.cfg"):
 		file_access = FileAccess.open(Global.game_location+"/options.cfg",FileAccess.READ)
 		print(JSON.parse_string(file_access.get_as_text()))
 		$Tabs/Graphics/ScrollContainer/VBoxContainer/window_type/window_type_selector.selected = JSON.parse_string(file_access.get_as_text())["window_type"]
-		$Tabs/Graphics/ScrollContainer/VBoxContainer/window_resulotion/window_resulotion_selector.selected = JSON.parse_string(file_access.get_as_text())["window_resolution"]
-		$Tabs/Graphics/ScrollContainer/VBoxContainer/frame_rate_limit/frame_rate_limit_selector.selected = JSON.parse_string(file_access.get_as_text())["frame_rate_limit"]
+		$Tabs/Graphics/ScrollContainer/VBoxContainer/frame_rate_limit/custom_fps_limit.value = JSON.parse_string(file_access.get_as_text())["frame_rate_limit"]
 		$Tabs/Graphics/ScrollContainer/VBoxContainer/particle_amount_slider.value = JSON.parse_string(file_access.get_as_text())["particle_amount"]
 		$Tabs/Graphics/ScrollContainer/VBoxContainer/brightness_slider.value = JSON.parse_string(file_access.get_as_text())["brightness"]
 		
@@ -63,9 +76,8 @@ func _ready() -> void:
 		$Tabs/Saves/ScrollContainer/VBoxContainer/WindowType/path_line_edit.text = JSON.parse_string(file_access.get_as_text())["save_path"]
 		$Tabs/Saves/ScrollContainer/VBoxContainer/autosave_frequency_slider.value = JSON.parse_string(file_access.get_as_text())["autosave_frequency"]
 	else:
-		$Tabs/Graphics/ScrollContainer/VBoxContainer/window_type/window_type_selector.selected = 2
-		$Tabs/Graphics/ScrollContainer/VBoxContainer/window_resulotion/window_resulotion_selector.selected = 10
-		$Tabs/Graphics/ScrollContainer/VBoxContainer/frame_rate_limit/frame_rate_limit_selector.selected = 1
+		$Tabs/Graphics/ScrollContainer/VBoxContainer/window_type/window_type_selector.selected = 0
+		$Tabs/Graphics/ScrollContainer/VBoxContainer/frame_rate_limit/custom_fps_limit.value = 60
 		$Tabs/Graphics/ScrollContainer/VBoxContainer/particle_amount_slider.value = 0
 		$Tabs/Graphics/ScrollContainer/VBoxContainer/brightness_slider.value = 0
 		
@@ -87,17 +99,13 @@ func _ready() -> void:
 	$Tabs/Keycodes/ScrollContainer/VBoxContainer/zoom_in/keycode_label.text = (InputMap.action_get_events("zoom_in")[0]).as_text()
 	$Tabs/Keycodes/ScrollContainer/VBoxContainer/zoom_out/keycode_label.text = (InputMap.action_get_events("zoom_out")[0]).as_text()
 
-
 func _on_save_button_pressed() -> void:
+	update_settings()
 	file_access = FileAccess.open(Global.game_location+"/options.cfg",FileAccess.WRITE_READ)
-	get_tree().change_scene_to_file("res://scenes/menu.tscn")
 	json_settings = JSON.stringify(settings)
-	print(json_settings)
 	file_access.store_string(json_settings)
 	file_access.close()
-	for i in changed_actions.keys():
-		InputMap.action_erase_events(i)
-		InputMap.action_add_event(i,changed_actions[i])
+	get_tree().change_scene_to_file("res://scenes/menu.tscn")
 
 func _on_cancel_button_pressed() -> void:
 	file_access = FileAccess.open(Global.game_location+"/options.cfg",FileAccess.READ)
@@ -107,10 +115,8 @@ func _on_cancel_button_pressed() -> void:
 
 func _on_window_type_selector_item_selected(index: int) -> void:
 	settings["window_type"] = index
-func _on_window_resulotion_selector_item_selected(index: int) -> void:
-	settings["window_resolution"] = index
-func _on_frame_rate_limit_selector_item_selected(index: int) -> void:
-	settings["frame_rate_limit"] = index
+func _on_custom_fps_limit_value_changed(value: float) -> void:
+	settings["frame_rate_limit"] = value
 func _on_particle_amount_slider_value_changed(value: float) -> void:
 	settings["particle_amount"] = value
 func _on_brightness_slider_value_changed(value: float) -> void:
@@ -157,7 +163,6 @@ func _on_zoom_in_reset_button_pressed() -> void:
 	erase_key("zoom_in")
 func _on_zoom_out_reset_button_pressed() -> void:
 	erase_key("zoom_out")
-
 
 func _input(event: InputEvent) -> void:
 	if current_action != null and event is InputEventKey and event.is_pressed():

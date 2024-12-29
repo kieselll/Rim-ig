@@ -1,4 +1,4 @@
-[gd_scene load_steps=134 format=4 uid="uid://b2icuxwl41o5e"]
+[gd_scene load_steps=132 format=4 uid="uid://b2icuxwl41o5e"]
 
 [ext_resource type="Script" path="res://scripts/Mainscene.gd" id="1_i8tk3"]
 [ext_resource type="Script" path="res://scripts/Camera2D.gd" id="2_mo25s"]
@@ -36,7 +36,6 @@
 [ext_resource type="Texture2D" uid="uid://pj0mkd48kr41" path="res://textures/items/Selection (10).png" id="24_hq2y5"]
 [ext_resource type="Texture2D" uid="uid://2k8r1hbu7v1j" path="res://textures/tilesets/Selection.png" id="24_jtn0t"]
 [ext_resource type="Texture2D" uid="uid://dkkyiac7tm1w6" path="res://textures/items/Selection (7).png" id="25_cdfgq"]
-[ext_resource type="Texture2D" uid="uid://c76rfslreko6m" path="res://textures/items/Untitled 08-17-2024 07-40-03.png" id="25_ghscd"]
 [ext_resource type="Texture2D" uid="uid://charitges30fm" path="res://textures/items/Selection (8).png" id="26_yubcp"]
 [ext_resource type="Script" path="res://scripts/building_agent.gd" id="29_gg2yg"]
 [ext_resource type="Shader" path="res://scenes/inverted_blur.gdshader" id="32_ita51"]
@@ -1958,9 +1957,6 @@ abilities = {
 "building": 0
 }
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_7pkrf"]
-size = Vector2(26, 27)
-
 [node name="Node2D" type="Node2D"]
 process_mode = 1
 script = ExtResource("1_i8tk3")
@@ -2443,7 +2439,7 @@ theme_override_styles/normal = SubResource("StyleBoxFlat_w2od6")
 text = "Yes, and save the progress"
 icon = ExtResource("32_qyjeh")
 
-[node name="dont_save_progss" type="Button" parent="Control/popup_layer/save_confirmation_menu/VBoxContainer"]
+[node name="dont_save_progress" type="Button" parent="Control/popup_layer/save_confirmation_menu/VBoxContainer"]
 layout_mode = 2
 theme = ExtResource("11_5b315")
 text = "Yes, but don't save the progress"
@@ -2547,30 +2543,27 @@ tile_set = SubResource("TileSet_pruen")
 rendering_quadrant_size = 4
 
 [node name="terrain_queued_d" type="TileMapLayer" parent="TileMap"]
-modulate = Color(1, 1, 1, 0.5)
+modulate = Color(100, 0, 0, 0.5)
 z_index = 1
 texture_filter = 1
 use_parent_material = true
-tile_map_data = PackedByteArray("AAAHABIACAAJAAIAAAAHABEACAAGAAEAAAAHABAACAALAAAAAAAGABIACAAFAAIAAAAGABEACAAFAAEAAAAGABAACAAIAAAAAAAFABIACAAIAAMAAAAFABEACAAIAAAAAAAIABEACAAKAAAAAAAIABIACAAJAAIAAAAJABIACAAJAAIAAAAJABEACAAKAAAAAAAKABEACAALAAAAAAAKABIACAAGAAEAAAAKABMACAAJAAIAAAAJABMACAAJAAIAAAAIABMACAAJAAIAAAAHABMACAAJAAIAAAAGABMACAAIAAEAAAAGABQACAAIAAMAAAAHABQACAAJAAMAAAAIABQACAAJAAMAAAAJABQACAAJAAMAAAAKABQACAAJAAMAAAALABQACAALAAMAAAALABMACAALAAIAAAALABIACAALAAAAAAA=")
 tile_set = SubResource("TileSet_pruen")
 rendering_quadrant_size = 4
 collision_visibility_mode = 1
 navigation_enabled = false
 
 [node name="walls_queued_d" type="TileMapLayer" parent="TileMap"]
-modulate = Color(1, 1, 1, 0.5)
+modulate = Color(100, 0, 0, 0.5)
 z_index = 2
-tile_map_data = PackedByteArray("AAAFAAsABQABAAAAAAAFAAwABQABAAAAAADx/xoABQAAAAIAAwA=")
 tile_set = SubResource("TileSet_pruen")
 rendering_quadrant_size = 4
 navigation_enabled = false
 
 [node name="light_masked_queued_d" type="TileMapLayer" parent="TileMap"]
-modulate = Color(1, 1, 1, 0.5)
+modulate = Color(100, 0, 0, 0.5)
 light_mask = 2
 z_index = 3
 use_parent_material = true
-tile_map_data = PackedByteArray("AADz/xoABQAGAAAAAAA=")
 tile_set = SubResource("TileSet_pruen")
 rendering_quadrant_size = 4
 
@@ -2579,17 +2572,6 @@ position = Vector2(638, 309)
 scale = Vector2(1, 1)
 floor_constant_speed = true
 characteristics = SubResource("Resource_w3tfr")
-
-[node name="StaticBody2D" type="StaticBody2D" parent="." groups=["enemies"]]
-position = Vector2(255, 274)
-
-[node name="Icon" type="Sprite2D" parent="StaticBody2D"]
-z_index = 45
-texture_filter = 1
-texture = ExtResource("25_ghscd")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
-shape = SubResource("RectangleShape2D_7pkrf")
 
 [node name="process_handler" type="Node" parent="."]
 script = ExtResource("46_imxyg")
@@ -2624,5 +2606,9 @@ script = ExtResource("48_7u3gs")
 [connection signal="button_up" from="Control/CanvasLayer/ui_buttons/build_toggle_button" to="Control/CanvasLayer/selection_buttons_rect" method="_on_button_button_up"]
 [connection signal="toggled" from="Control/CanvasLayer/ui_buttons/build_toggle_button" to="Control/CanvasLayer/selection_buttons_rect" method="_on_button_toggled"]
 [connection signal="pressed" from="Control/popup_layer/pause_menu/VBoxContainer/resume_button" to="paused_process_handler" method="_on_resume_button_pressed"]
+[connection signal="pressed" from="Control/popup_layer/pause_menu/VBoxContainer/options_button" to="paused_process_handler" method="_on_options_button_pressed"]
 [connection signal="pressed" from="Control/popup_layer/pause_menu/VBoxContainer/main_menu_button" to="paused_process_handler" method="_on_main_menu_button_pressed"]
+[connection signal="pressed" from="Control/popup_layer/pause_menu/VBoxContainer/exit_button" to="paused_process_handler" method="_on_exit_button_pressed"]
+[connection signal="pressed" from="Control/popup_layer/save_confirmation_menu/VBoxContainer/save_progress" to="paused_process_handler" method="_on_save_progress_pressed"]
+[connection signal="pressed" from="Control/popup_layer/save_confirmation_menu/VBoxContainer/dont_save_progress" to="paused_process_handler" method="_on_dont_save_progress_pressed"]
 [connection signal="pressed" from="Control/popup_layer/save_confirmation_menu/VBoxContainer/cancel_button" to="paused_process_handler" method="_on_cancel_button_pressed"]

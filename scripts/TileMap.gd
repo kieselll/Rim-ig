@@ -14,11 +14,7 @@ func check_mouse_collision(node : Node):
 	else:
 		return false
 
-func _ready() -> void:
-	var total_cell_array : Array
-	var light_cell_array : Array
-
-func _process(delta):
+func _process(_delta):
 	if check_mouse_collision($"../Control/CanvasLayer/selection_buttons_rect")\
 	or check_mouse_collision($"../Control/CanvasLayer/selection_buttons_rect/HBoxContainer/list_rect")\
 	or check_mouse_collision($"../Control/CanvasLayer/ui_buttons"):

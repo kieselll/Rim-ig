@@ -11,10 +11,10 @@ class pawn_trait:
 	var socially_positive : bool
 	var self_positive : bool
 	
-	func _init(name,socially_positive,self_positive) -> void:
-		self.name = name
-		self.socially_positive = socially_positive
-		self.self_positive = self_positive
+	func _init(_name,_socially_positive,_self_positive) -> void:
+		self.name = _name
+		self.socially_positive = _socially_positive
+		self.self_positive = _self_positive
 
 @export var personality = personalities.AMBIVERT
 @export var stats = {

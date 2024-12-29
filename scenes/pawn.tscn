@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://b46j0js042i4q"]
+[gd_scene load_steps=11 format=3 uid="uid://b46j0js042i4q"]
 
 [ext_resource type="Script" path="res://scripts/CharacterBody2D.gd" id="1_88j76"]
 [ext_resource type="Script" path="res://resources/resource_scripts/pawn_stat_resouce.gd" id="2_tucm2"]
@@ -26,15 +26,6 @@ radius = 9.0
 [sub_resource type="CircleShape2D" id="CircleShape2D_e1raa"]
 radius = 151.855
 
-[sub_resource type="Gradient" id="Gradient_a2uu4"]
-colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_j4afd"]
-gradient = SubResource("Gradient_a2uu4")
-fill = 1
-fill_from = Vector2(0.5, 0.5)
-fill_to = Vector2(1, 0.482906)
-
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bqii1"]
 bg_color = Color(0, 0, 0, 1)
 corner_radius_top_left = 4
@@ -48,7 +39,7 @@ expand_margin_bottom = 1.0
 anti_aliasing = false
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_a4pcm"]
-bg_color = Color(0.44752, 0.680588, 0.116297, 1)
+bg_color = Color(0, 0.75, 0, 1)
 corner_radius_top_left = 2
 corner_radius_top_right = 2
 corner_radius_bottom_right = 2
@@ -92,14 +83,6 @@ script = ExtResource("5_tvxll")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 shape = SubResource("CircleShape2D_e1raa")
 
-[node name="PointLight2D" type="PointLight2D" parent="."]
-position = Vector2(3.05176e-05, 3.05176e-05)
-energy = 0.78
-shadow_enabled = true
-shadow_filter = 1
-shadow_filter_smooth = 5.0
-texture = SubResource("GradientTexture2D_j4afd")
-
 [node name="Panel" type="Panel" parent="."]
 visible = false
 light_mask = 2
@@ -112,6 +95,7 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_bqii1")
 
 [node name="Panel2" type="Panel" parent="Panel"]
 light_mask = 2
+layout_mode = 0
 offset_left = 1.0
 offset_top = 1.0
 offset_right = 2.0

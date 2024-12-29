@@ -4,11 +4,9 @@ var button_hover = false
 var game_location = "C:/Users/Кирилл/Desktop/Сейвы игры (хз)" 
 var astar = AStarGrid2D.new()
 
-var building_queue : Dictionary = {
-}
+var building_queue : Dictionary = {}
 
-var demolition_queue : Dictionary = {
-}
+var demolition_queue : Dictionary = {}
 
 var class_reference : Dictionary = {
 	"doors_regular" : buildables.doors.regular,
@@ -43,19 +41,24 @@ class BuildableItem:
 	var queued_layer : String
 	var source_id : int
 	var atlas_coords : Vector2
+	var build_time : float
 
-	func _init(id, collision, wall, layer, queued_layer, source_id, atlas_coords):
-		self.id = id
-		self.collision = collision
-		self.wall = wall
-		self.layer = layer
-		self.queued_layer = queued_layer
-		self.source_id = source_id
-		self.atlas_coords = atlas_coords
+	func _init(_id, _collision, _wall, _layer, _queued_layer, _source_id, _atlas_coords, _build_time = 2.0):
+		self.id = _id
+		self.collision = _collision
+		self.wall = _wall
+		self.layer = _layer
+		self.queued_layer = _queued_layer
+		self.source_id = _source_id
+		self.atlas_coords = _atlas_coords
+		self.build_time = _build_time
+
 	func get_layer_node(layers: Dictionary) -> Node:
 		return layers.get(layer, null)
+
 	func get_queued_layer_node(layers: Dictionary) -> Node:
 		return layers.get(queued_layer, null)
+
 
 class BuildableLightSource:
 	var id : int
@@ -65,23 +68,22 @@ class BuildableLightSource:
 	var queued_layer : String
 	var source_id : int
 	var atlas_coords : Vector2
+	var build_time : float
 	var light_scene
 	var radians_per_alternative
 
-	func _init(id, collision, wall, layer, queued_layer, source_id, atlas_coords, light_scene, radians_per_alternative):
-		self.id = id
-		self.collision = collision
-		self.wall = wall
-		self.layer = layer
-		self.queued_layer = queued_layer
-		self.source_id = source_id
-		self.atlas_coords = atlas_coords
-		self.light_scene = light_scene
-		self.radians_per_alternative = radians_per_alternative
-	func get_layer_node(layers: Dictionary) -> Node:
-		return layers.get(layer, null)
-	func get_queued_layer_node(layers: Dictionary) -> Node:
-		return layers.get(queued_layer, null)
+	func _init(_id, _collision, _wall, _layer, _queued_layer, _source_id, _atlas_coords, _light_scene, _radians_per_alternative, _build_time = 3.0):
+		self.id = _id
+		self.collision = _collision
+		self.wall = _wall
+		self.layer = _layer
+		self.queued_layer = _queued_layer
+		self.source_id = _source_id
+		self.atlas_coords = _atlas_coords
+		self.build_time = _build_time
+		self.light_scene = _light_scene
+		self.radians_per_alternative = _radians_per_alternative
+
 
 class BuildableTerrain:
 	var id : int
@@ -92,51 +94,56 @@ class BuildableTerrain:
 	var filled : bool
 	var terrain_set : int
 	var terrain_id : int
+	var build_time : float
 
-	func _init(id, collision, wall, layer, queued_layer, filled, terrain_set, terrain_id):
-		self.id = id
-		self.collision = collision
-		self.wall = wall
-		self.layer = layer
-		self.queued_layer = queued_layer
-		self.filled = filled
-		self.terrain_set = terrain_set
-		self.terrain_id = terrain_id
+	func _init(_id, _collision, _wall, _layer, _queued_layer, _filled, _terrain_set, _terrain_id, _build_time = 4.0):
+		self.id = _id
+		self.collision = _collision
+		self.wall = _wall
+		self.layer = _layer
+		self.queued_layer = _queued_layer
+		self.filled = _filled
+		self.terrain_set = _terrain_set
+		self.terrain_id = _terrain_id
+		self.build_time = _build_time
+
 	func get_layer_node(layers: Dictionary) -> Node:
 		return layers.get(layer, null)
+
 	func get_queued_layer_node(layers: Dictionary) -> Node:
 		return layers.get(queued_layer, null)
 
+
 class buildables:
 	class doors:
-		static var regular = BuildableItem.new(3, true, false, "walls", "walls_queued", 3, Vector2(0, 0))
-		static var large = BuildableItem.new(4, true, false, "walls", "walls_queued", 3, Vector2(0, 1))
+		static var regular = BuildableItem.new(3, true, false, "walls", "walls_queued", 3, Vector2(0, 0), 2.5)
+		static var large = BuildableItem.new(4, true, false, "walls", "walls_queued", 3, Vector2(0, 1), 3.5)
 	class terrain:
-		static var pavement = BuildableTerrain.new(5, false, false, "terrain", "terrain_queued", true, 0, 1)
-		static var brussells = BuildableTerrain.new(6, false, false, "terrain", "terrain_queued", true, 0, 3)
-		static var remove = BuildableItem.new(-1, false, false, "terrain", "terrain_queued_d", -1, Vector2.ZERO)
+		static var pavement = BuildableTerrain.new(5, false, false, "terrain", "terrain_queued", true, 0, 1, 4.0)
+		static var brussells = BuildableTerrain.new(6, false, false, "terrain", "terrain_queued", true, 0, 3, 5.0)
+		static var remove = BuildableItem.new(-1, false, false, "terrain", "terrain_queued_d", -1, Vector2.ZERO, 0)
 	class objects:
 		class furniture:
-			static var chair = BuildableItem.new(7, true, false, "walls", "walls_queued", 5, Vector2(0, 0))
-			static var armchair = BuildableItem.new(8, true, false, "walls", "walls_queued", 5, Vector2(1, 0))
-			static var sofa = BuildableItem.new(9, true, false, "walls", "walls_queued", 5, Vector2(0, 2))
-			static var table = BuildableItem.new(10, true, true, "walls", "walls_queued", 5, Vector2(2, 2))
-			static var dresser = BuildableItem.new(11, true, true, "walls", "walls_queued", 5, Vector2(4, 2))
-			static var shower = BuildableItem.new(12, true, false, "walls", "walls_queued", 5, Vector2(1, 1))
+			static var chair = BuildableItem.new(7, true, false, "walls", "walls_queued", 5, Vector2(0, 0), 2.0)
+			static var armchair = BuildableItem.new(8, true, false, "walls", "walls_queued", 5, Vector2(1, 0), 2.5)
+			static var sofa = BuildableItem.new(9, true, false, "walls", "walls_queued", 5, Vector2(0, 2), 3.0)
+			static var table = BuildableItem.new(10, true, true, "walls", "walls_queued", 5, Vector2(2, 2), 4.0)
+			static var dresser = BuildableItem.new(11, true, true, "walls", "walls_queued", 5, Vector2(4, 2), 4.5)
+			static var shower = BuildableItem.new(12, true, false, "walls", "walls_queued", 5, Vector2(1, 1), 3.5)
 		class electronics:
-			static var tv = BuildableItem.new(13, true, true, "walls", "walls_queued", 5, Vector2(0, 3))
-			static var pc = BuildableLightSource.new(14, true, true, "walls", "walls_queued", 5, Vector2(2, 0), "res://scenes/light_scenes/ComputerLight.tscn", 1.5707975)
-			static var oven = BuildableItem.new(15, true, true, "walls", "walls_queued", 5, Vector2(3, 0))
-			static var washing_machine = BuildableItem.new(16, false, true, "walls", "walls_queued", 5, Vector2(0, 1))
-			static var antenna = BuildableItem.new(17, false, true, "walls", "walls_queued", 5, Vector2(4, 0))
-			static var street_light_double = BuildableLightSource.new(18, false, true, "light_masked", "light_masked_queued", 5, Vector2(6, 0), "res://scenes/light_scenes/StreetLightDouble.tscn", 4.71239)
+			static var tv = BuildableItem.new(13, true, true, "walls", "walls_queued", 5, Vector2(0, 3), 3.5)
+			static var pc = BuildableLightSource.new(14, true, true, "walls", "walls_queued", 5, Vector2(2, 0), "res://scenes/light_scenes/ComputerLight.tscn", 1.5707975, 4.0)
+			static var oven = BuildableItem.new(15, true, true, "walls", "walls_queued", 5, Vector2(3, 0), 3.5)
+			static var washing_machine = BuildableItem.new(16, false, true, "walls", "walls_queued", 5, Vector2(0, 1), 4.0)
+			static var antenna = BuildableItem.new(17, false, true, "walls", "walls_queued", 5, Vector2(4, 0), 3.0)
+			static var street_light_double = BuildableLightSource.new(18, false, true, "light_masked", "light_masked_queued", 5, Vector2(6, 0), "res://scenes/light_scenes/StreetLightDouble.tscn", 4.71239, 5.0)
 		class decorations:
-			static var flower = BuildableItem.new(19, false, true, "walls", "walls_queued", 5, Vector2(3, 1))
-			static var cactus = BuildableItem.new(20, false, true, "walls", "walls_queued", 5, Vector2(2, 1))
-		static var remove = BuildableItem.new(-1, false, false, "walls", "walls_queued_d", -1, Vector2.ZERO)
+			static var flower = BuildableItem.new(19, false, true, "walls", "walls_queued", 5, Vector2(3, 1), 2.0)
+			static var cactus = BuildableItem.new(20, false, true, "walls", "walls_queued", 5, Vector2(2, 1), 2.5)
+		static var remove = BuildableItem.new(-1, false, false, "walls", "walls_queued_d", -1, Vector2.ZERO, 0)
 	class walls:
-		static var standard = BuildableTerrain.new(21, true, true, "walls", "walls_queued", false, 1, 0)
-		static var remove = BuildableItem.new(-1, false, false, "walls", "walls_queued_d", -1, Vector2.ZERO)
+		static var standard = BuildableTerrain.new(21, true, true, "walls", "walls_queued", false, 1, 0, 6.0)
+		static var remove = BuildableTerrain.new(-1, false, false, "walls", "walls_queued_d", false, 1, -1, 6.5)
 
 func find_tile_by_id(id : int):
 	for i in class_reference:
