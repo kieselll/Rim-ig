@@ -9,7 +9,6 @@ var rotate_pressed = ImageTexture.create_from_image(Image.load_from_file("res://
 var rotate_not_pressed = ImageTexture.create_from_image(Image.load_from_file("res://textures/ui/Untitled 08-08-2024 07-18-10 (1) (1).png"))
 @onready var tilemap = $"../TileMap"
 var filled_array
-var os_name = OS.get_name()
 var touch_event
 var motion_event
 
@@ -33,42 +32,60 @@ func _process(_delta: float) -> void:
 		$"../Control/CanvasLayer/zoom_buttons/rotate_button".texture_normal = rotate_pressed
 	else:
 		$"../Control/CanvasLayer/zoom_buttons/rotate_button".texture_normal = rotate_not_pressed
-func fill_area(pos_1 : Vector2i, pos_2 : Vector2i, built_object,queued : bool):
-	var fill_rect = Rect2(pos_1,pos_2 - pos_1).abs()
-	var fill_array : Array
+
+# Last refined: 2025-01-15
+func fill_area(pos_1: Vector2i, pos_2: Vector2i, built_object, queued: bool):
+	# Calculate the rectangular area to be filled, ensuring positive dimensions
+	var fill_rect = Rect2(pos_1, pos_2 - pos_1).abs()
+	# Initialize an array to store the positions to be filled
+	var fill_array: Array = []
+
+	# Check if the built object is a terrain type and is filled
 	if built_object is Global.BuildableTerrain and built_object.filled == true:
-		for i in range(fill_rect.position.x,fill_rect.position.x + fill_rect.size.x + 1):
-			for j in range(fill_rect.position.y,fill_rect.position.y + fill_rect.size.y + 1): #rect area
-				fill_array.append(Vector2i(i,j))
-		if queued == true:
-			built_object.get_queued_layer_node(layers).set_cells_terrain_connect(fill_array, built_object.terrain_set,built_object.terrain_id)
+		# Iterate over the rectangular area to populate 'fill_array' with all positions
+		for i in range(fill_rect.position.x, fill_rect.position.x + fill_rect.size.x + 1):
+			for j in range(fill_rect.position.y, fill_rect.position.y + fill_rect.size.y + 1):
+				fill_array.append(Vector2i(i, j))
+		# Set the terrain connection based on whether the action is queued
+		if queued:
+			built_object.get_queued_layer_node(layers).set_cells_terrain_connect(fill_array, built_object.terrain_set, built_object.terrain_id)
 		else:
-			built_object.get_layer_node(layers).set_cells_terrain_connect(fill_array, built_object.terrain_set,built_object.terrain_id)
+			built_object.get_layer_node(layers).set_cells_terrain_connect(fill_array, built_object.terrain_set, built_object.terrain_id)
+		# Update the pathfinding grid to reflect the filled region
 		Global.astar.fill_solid_region(fill_rect, not built_object.wall)
 		return fill_array
-	elif built_object is Global.BuildableTerrain and built_object.filled == false:
-		for i in range(fill_rect.position.x,fill_rect.position.x + fill_rect.size.x + 1,1): #vertical rect borders
-			fill_array.append(Vector2(i,fill_rect.position.y))
-			fill_array.append(Vector2(i,fill_rect.position.y + fill_rect.size.y))
-			for j in range(fill_rect.position.y,fill_rect.position.y + fill_rect.size.y + 1,1): #horizontal rect borders
-				fill_array.append(Vector2(fill_rect.position.x,j))
-				fill_array.append(Vector2(fill_rect.position.x + fill_rect.size.x,j))
-		if queued == true:
+
+	# Handle cases where the terrain is not filled
+	elif built_object is Global.BuildableTerrain and not built_object.filled:
+		# Fill the edges of the rectangular area
+		for i in range(fill_rect.position.x, fill_rect.position.x + fill_rect.size.x + 1):
+			fill_array.append(Vector2(i, fill_rect.position.y))
+			fill_array.append(Vector2(i, fill_rect.position.y + fill_rect.size.y))
+		for j in range(fill_rect.position.y, fill_rect.position.y + fill_rect.size.y + 1):
+			fill_array.append(Vector2(fill_rect.position.x, j))
+			fill_array.append(Vector2(fill_rect.position.x + fill_rect.size.x, j))
+		# Handle queued or non-queued terrain updates
+		if queued:
 			if built_object == Global.buildables.walls.remove:
-				get_node("../TileMap/"+built_object.layer+"_queued_d").set_cells_terrain_connect(fill_array,built_object.terrain_set,0)
+				get_node("../TileMap/" + built_object.layer + "_queued_d").set_cells_terrain_connect(fill_array, built_object.terrain_set, 0)
 			elif built_object == Global.buildables.terrain.remove:
-				get_node("../TileMap/"+built_object.layer+"_queued_d").set_cells_terrain_connect(fill_array,built_object.terrain_set,1)
+				get_node("../TileMap/" + built_object.layer + "_queued_d").set_cells_terrain_connect(fill_array, built_object.terrain_set, 1)
 			else:
-				built_object.get_queued_layer_node(layers).set_cells_terrain_connect(fill_array,built_object.terrain_set,built_object.terrain_id)
+				built_object.get_queued_layer_node(layers).set_cells_terrain_connect(fill_array, built_object.terrain_set, built_object.terrain_id)
 		else:
-			built_object.get_layer_node(layers).set_cells_terrain_connect(fill_array,built_object.terrain_set,built_object.terrain_id)
+			built_object.get_layer_node(layers).set_cells_terrain_connect(fill_array, built_object.terrain_set, built_object.terrain_id)
 		return fill_array
+
+	# Handle cases for buildable items or light sources
 	elif built_object is Global.BuildableItem or built_object is Global.BuildableLightSource:
-		if queued == true:
-			built_object.get_queued_layer_node(layers).set_cell(pos_2,built_object.source_id,built_object.atlas_coords)
+		# Set the cell for the specific position based on whether the action is queued
+		if queued:
+			built_object.get_queued_layer_node(layers).set_cell(pos_2, built_object.source_id, built_object.atlas_coords)
 		else:
-			built_object.get_layer_node(layers).set_cell(pos_2,built_object.source_id,built_object.atlas_coords)
+			built_object.get_layer_node(layers).set_cell(pos_2, built_object.source_id, built_object.atlas_coords)
+		# Return the single position as the filled area
 		return [pos_2]
+
 
 func get_rect_border_points(pos_1: Vector2, pos_2: Vector2) -> Array:
 	var points = []

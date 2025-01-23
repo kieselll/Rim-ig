@@ -1,0 +1,38 @@
+[gd_scene load_steps=6 format=3 uid="uid://mkd08kjbwtku"]
+
+[ext_resource type="Script" path="res://scripts/joystick_control.gd" id="1_u1xv1"]
+
+[sub_resource type="Gradient" id="Gradient_3wgj8"]
+offsets = PackedFloat32Array(0, 0.688235, 0.691803)
+colors = PackedColorArray(0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_4rr0n"]
+gradient = SubResource("Gradient_3wgj8")
+width = 160
+height = 160
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(1, 1)
+
+[sub_resource type="Gradient" id="Gradient_aok1x"]
+offsets = PackedFloat32Array(0.439252, 0.670185, 0.692612)
+colors = PackedColorArray(1, 1, 1, 1, 0.314316, 0.314316, 0.314316, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_454yj"]
+gradient = SubResource("Gradient_aok1x")
+width = 32
+height = 32
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(1, 1)
+
+[node name="Node2D" type="Node2D"]
+script = ExtResource("1_u1xv1")
+
+[node name="Sprite2D2" type="Sprite2D" parent="."]
+texture_filter = 2
+texture = SubResource("GradientTexture2D_4rr0n")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+texture = SubResource("GradientTexture2D_454yj")

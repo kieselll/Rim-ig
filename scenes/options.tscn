@@ -1,6 +1,6 @@
-[gd_scene load_steps=16 format=3 uid="uid://c8mjqvqebyeop"]
+[gd_scene load_steps=17 format=3 uid="uid://c8mjqvqebyeop"]
 
-[ext_resource type="Script" path="res://scenes/option_script.gd" id="1_3x372"]
+[ext_resource type="Script" path="res://scripts/option_script.gd" id="1_3x372"]
 [ext_resource type="Theme" uid="uid://qb0c3yxrvyka" path="res://resources/theme.tres" id="1_ngyiw"]
 [ext_resource type="Texture2D" uid="uid://hm5h16w6fohb" path="res://textures/ui/save_icon.png" id="2_glwxp"]
 [ext_resource type="Texture2D" uid="uid://ctfh13uxsygl0" path="res://textures/ui/reset_key.png" id="2_j3x8n"]
@@ -52,6 +52,16 @@ shader_parameter/lod = 1.318
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_am740"]
 bg_color = Color(0, 0, 0, 0.876)
 
+[sub_resource type="Environment" id="Environment_sex1m"]
+background_mode = 3
+glow_enabled = true
+glow_levels/1 = 1.86
+glow_levels/2 = 1.09
+glow_intensity = 2.41
+glow_strength = 1.2
+glow_blend_mode = 1
+glow_hdr_scale = 1.6
+
 [node name="Control" type="Control"]
 layout_mode = 3
 anchors_preset = 15
@@ -91,8 +101,9 @@ size_flags_vertical = 3
 theme = ExtResource("1_ngyiw")
 
 [node name="screen" type="Label" parent="Tabs/Graphics/ScrollContainer/VBoxContainer"]
+modulate = Color(2, 2, 2, 1)
 layout_mode = 2
-theme_override_colors/font_color = Color(0.577198, 0.846257, 0.426967, 1)
+theme_override_colors/font_color = Color(0.413024, 0.889223, 1.15514e-06, 1)
 theme_override_font_sizes/font_size = 25
 text = "Screen"
 horizontal_alignment = 1
@@ -144,8 +155,9 @@ theme_override_styles/separator = SubResource("StyleBoxEmpty_7rvjq")
 metadata/_edit_group_ = true
 
 [node name="Details" type="Label" parent="Tabs/Graphics/ScrollContainer/VBoxContainer"]
+modulate = Color(2, 2, 2, 1)
 layout_mode = 2
-theme_override_colors/font_color = Color(0.577198, 0.846257, 0.426967, 1)
+theme_override_colors/font_color = Color(0.411765, 0.890196, 0, 1)
 theme_override_font_sizes/font_size = 25
 text = "Details"
 horizontal_alignment = 1
@@ -204,8 +216,9 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="game" type="Label" parent="Tabs/Gameplay/ScrollContainer/VBoxContainer"]
+modulate = Color(2, 2, 2, 1)
 layout_mode = 2
-theme_override_colors/font_color = Color(0.577198, 0.846257, 0.426967, 1)
+theme_override_colors/font_color = Color(0.411765, 0.890196, 0, 1)
 theme_override_font_sizes/font_size = 25
 text = "Game"
 horizontal_alignment = 1
@@ -256,8 +269,9 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="camera" type="Label" parent="Tabs/Controls/ScrollContainer/VBoxContainer"]
+modulate = Color(2, 2, 2, 1)
 layout_mode = 2
-theme_override_colors/font_color = Color(0.577198, 0.846257, 0.426967, 1)
+theme_override_colors/font_color = Color(0.411765, 0.890196, 0, 1)
 theme_override_font_sizes/font_size = 25
 text = "Camera"
 horizontal_alignment = 1
@@ -343,8 +357,9 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="movement" type="Label" parent="Tabs/Keycodes/ScrollContainer/VBoxContainer"]
+modulate = Color(2, 2, 2, 1)
 layout_mode = 2
-theme_override_colors/font_color = Color(0.577198, 0.846257, 0.426967, 1)
+theme_override_colors/font_color = Color(0.411765, 0.890196, 0, 1)
 theme_override_font_sizes/font_size = 25
 text = "Movement"
 horizontal_alignment = 1
@@ -472,8 +487,9 @@ horizontal_alignment = 1
 metadata/_edit_group_ = true
 
 [node name="building" type="Label" parent="Tabs/Keycodes/ScrollContainer/VBoxContainer"]
+modulate = Color(2, 2, 2, 1)
 layout_mode = 2
-theme_override_colors/font_color = Color(0.577198, 0.846257, 0.426967, 1)
+theme_override_colors/font_color = Color(0.411765, 0.890196, 0, 1)
 theme_override_font_sizes/font_size = 25
 text = "Building"
 horizontal_alignment = 1
@@ -519,8 +535,9 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="audio" type="Label" parent="Tabs/Audio/ScrollContainer/VBoxContainer"]
+modulate = Color(2, 2, 2, 1)
 layout_mode = 2
-theme_override_colors/font_color = Color(0.577198, 0.846257, 0.426967, 1)
+theme_override_colors/font_color = Color(0.411765, 0.890196, 0, 1)
 theme_override_font_sizes/font_size = 25
 text = "Audio"
 horizontal_alignment = 1
@@ -598,8 +615,9 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="game" type="Label" parent="Tabs/Saves/ScrollContainer/VBoxContainer"]
+modulate = Color(2, 2, 2, 1)
 layout_mode = 2
-theme_override_colors/font_color = Color(0.577198, 0.846257, 0.426967, 1)
+theme_override_colors/font_color = Color(0.411765, 0.890196, 0, 1)
 theme_override_font_sizes/font_size = 25
 text = "Game"
 horizontal_alignment = 1
@@ -652,8 +670,9 @@ theme_override_styles/separator = SubResource("StyleBoxEmpty_7rvjq")
 metadata/_edit_group_ = true
 
 [node name="account" type="Label" parent="Tabs/Saves/ScrollContainer/VBoxContainer"]
+modulate = Color(2, 2, 2, 1)
 layout_mode = 2
-theme_override_colors/font_color = Color(0.577198, 0.846257, 0.426967, 1)
+theme_override_colors/font_color = Color(0.411765, 0.890196, 0, 1)
 theme_override_font_sizes/font_size = 25
 text = "Account"
 horizontal_alignment = 1
@@ -737,6 +756,9 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_am740")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_sex1m")
 
 [connection signal="item_selected" from="Tabs/Graphics/ScrollContainer/VBoxContainer/window_type/window_type_selector" to="." method="_on_window_type_selector_item_selected"]
 [connection signal="value_changed" from="Tabs/Graphics/ScrollContainer/VBoxContainer/frame_rate_limit/custom_fps_limit" to="." method="_on_custom_fps_limit_value_changed"]

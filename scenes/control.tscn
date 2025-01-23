@@ -1,12 +1,9 @@
-[gd_scene load_steps=132 format=4 uid="uid://b2icuxwl41o5e"]
+[gd_scene load_steps=129 format=4 uid="uid://b2icuxwl41o5e"]
 
 [ext_resource type="Script" path="res://scripts/Mainscene.gd" id="1_i8tk3"]
 [ext_resource type="Script" path="res://scripts/Camera2D.gd" id="2_mo25s"]
-[ext_resource type="Script" path="res://scenes/control.gd" id="3_eun6i"]
-[ext_resource type="Texture2D" uid="uid://csh4cgmf0y5iw" path="res://textures/ui/Untitled 08-08-2024 07-18-10 (3).png" id="3_fyonq"]
-[ext_resource type="Texture2D" uid="uid://dsgaddjs43v4p" path="res://textures/ui/Untitled 08-08-2024 07-18-10 (1).png" id="4_i1v21"]
-[ext_resource type="Texture2D" uid="uid://ro61byxcl6wb" path="res://textures/ui/Untitled 08-08-2024 07-18-10 (2).png" id="5_u7sq2"]
-[ext_resource type="Texture2D" uid="uid://k2rga0ka0j8s" path="res://textures/ui/Untitled 08-08-2024 07-18-10.png" id="6_8rwkn"]
+[ext_resource type="Script" path="res://scripts/control.gd" id="3_eun6i"]
+[ext_resource type="PackedScene" uid="uid://mkd08kjbwtku" path="res://scenes/joystick.tscn" id="4_c6uwu"]
 [ext_resource type="Texture2D" uid="uid://by3hv4coijng3" path="res://textures/ui/Untitled 08-08-2024 07-18-10 (5).png" id="7_l7chc"]
 [ext_resource type="Texture2D" uid="uid://c6vg5x6j4xxas" path="res://textures/ui/Untitled 08-08-2024 07-18-10 (6).png" id="8_e3ift"]
 [ext_resource type="Script" path="res://scripts/buildmenu.gd" id="9_1n1dg"]
@@ -1963,70 +1960,34 @@ script = ExtResource("1_i8tk3")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(576, 324)
+position_smoothing_enabled = true
+position_smoothing_speed = 7.0
 script = ExtResource("2_mo25s")
 
 [node name="Control" type="Control" parent="."]
 layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-script = ExtResource("3_eun6i")
-metadata/_edit_use_anchors_ = true
-
-[node name="CanvasLayer" type="CanvasLayer" parent="Control"]
-
-[node name="movement_buttons" type="Container" parent="Control/CanvasLayer"]
 anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
-offset_left = 60.0
-offset_top = -240.0
-offset_right = 60.0
-offset_bottom = -240.808
 grow_vertical = 0
-size_flags_horizontal = 4
+size_flags_horizontal = 0
+size_flags_vertical = 8
+mouse_filter = 1
+script = ExtResource("3_eun6i")
 
-[node name="move_left_button" type="TouchScreenButton" parent="Control/CanvasLayer/movement_buttons"]
-texture_filter = 1
-position = Vector2(0, 64)
-scale = Vector2(4, 4)
-texture_normal = ExtResource("3_fyonq")
-texture_pressed = ExtResource("3_fyonq")
-passby_press = true
-action = "left"
-visibility_mode = 1
+[node name="CanvasLayer" type="CanvasLayer" parent="Control"]
 
-[node name="move_right_button" type="TouchScreenButton" parent="Control/CanvasLayer/movement_buttons"]
-texture_filter = 1
-position = Vector2(128, 64)
-scale = Vector2(4, 4)
-texture_normal = ExtResource("4_i1v21")
-texture_pressed = ExtResource("4_i1v21")
-passby_press = true
-action = "right"
-visibility_mode = 1
+[node name="joystick_container" type="Container" parent="Control/CanvasLayer"]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 154.0
+offset_top = -154.0
+offset_right = 154.0
+offset_bottom = -154.0
+grow_vertical = 0
 
-[node name="move_down_button" type="TouchScreenButton" parent="Control/CanvasLayer/movement_buttons"]
-texture_filter = 1
-position = Vector2(64, 128)
-scale = Vector2(4, 4)
-texture_normal = ExtResource("5_u7sq2")
-texture_pressed = ExtResource("5_u7sq2")
-passby_press = true
-action = "down"
-visibility_mode = 1
-
-[node name="move_up_button" type="TouchScreenButton" parent="Control/CanvasLayer/movement_buttons"]
-texture_filter = 1
-position = Vector2(64, 0)
-scale = Vector2(4, 4)
-texture_normal = ExtResource("6_8rwkn")
-texture_pressed = ExtResource("6_8rwkn")
-passby_press = true
-action = "up"
-visibility_mode = 1
+[node name="Control" parent="Control/CanvasLayer/joystick_container" instance=ExtResource("4_c6uwu")]
 
 [node name="zoom_buttons" type="Container" parent="Control/CanvasLayer"]
 anchors_preset = 1
@@ -2338,6 +2299,114 @@ rotation = -1.5708
 pivot_offset = Vector2(1, 1)
 color = Color(0, 0, 0, 0.5)
 
+[node name="ColorRect4" type="ColorRect" parent="Control/CanvasLayer/clock/Sprite2D"]
+offset_left = -1.0
+offset_top = -26.0
+offset_right = 4.0
+offset_bottom = -24.0
+rotation = -1.5708
+pivot_offset = Vector2(1, 1)
+color = Color(0, 0, 0, 0.329)
+
+[node name="ColorRect5" type="ColorRect" parent="Control/CanvasLayer/clock/Sprite2D"]
+offset_left = -1.0
+offset_top = 27.0
+offset_right = 4.0
+offset_bottom = 29.0
+rotation = -1.5708
+pivot_offset = Vector2(1, 1)
+color = Color(0, 0, 0, 0.329)
+
+[node name="ColorRect6" type="ColorRect" parent="Control/CanvasLayer/clock/Sprite2D"]
+offset_left = 24.0
+offset_top = -1.0
+offset_right = 26.0
+offset_bottom = 4.0
+rotation = -1.5708
+pivot_offset = Vector2(1, 1)
+color = Color(0, 0, 0, 0.329)
+
+[node name="ColorRect7" type="ColorRect" parent="Control/CanvasLayer/clock/Sprite2D"]
+offset_left = -29.0
+offset_top = -1.0
+offset_right = -27.0
+offset_bottom = 4.0
+rotation = -1.5708
+pivot_offset = Vector2(1, 1)
+color = Color(0, 0, 0, 0.329)
+
+[node name="ColorRect8" type="ColorRect" parent="Control/CanvasLayer/clock/Sprite2D"]
+offset_left = 24.0563
+offset_top = -0.945862
+offset_right = 29.0563
+offset_bottom = 1.05414
+rotation = -0.523599
+pivot_offset = Vector2(-24.0552, 1.00104)
+color = Color(0, 0, 0, 0.329)
+
+[node name="ColorRect9" type="ColorRect" parent="Control/CanvasLayer/clock/Sprite2D"]
+offset_left = -28.9437
+offset_top = -0.946041
+offset_right = -23.9437
+offset_bottom = 1.05396
+rotation = -0.523599
+pivot_offset = Vector2(28.9448, 1.00122)
+color = Color(0, 0, 0, 0.329)
+
+[node name="ColorRect10" type="ColorRect" parent="Control/CanvasLayer/clock/Sprite2D"]
+offset_left = -0.943756
+offset_top = 24.054
+offset_right = 1.05624
+offset_bottom = 29.054
+rotation = -0.523599
+pivot_offset = Vector2(0.944916, -23.9988)
+color = Color(0, 0, 0, 0.329)
+
+[node name="ColorRect11" type="ColorRect" parent="Control/CanvasLayer/clock/Sprite2D"]
+offset_left = -0.86927
+offset_top = -28.8716
+offset_right = 1.13073
+offset_bottom = -23.8716
+rotation = -0.523599
+pivot_offset = Vector2(0.870399, 29.0011)
+color = Color(0, 0, 0, 0.329)
+
+[node name="ColorRect12" type="ColorRect" parent="Control/CanvasLayer/clock/Sprite2D"]
+offset_left = 24.0563
+offset_top = -0.945862
+offset_right = 29.0563
+offset_bottom = 1.05414
+rotation = -1.0472
+pivot_offset = Vector2(-24.0552, 1.00104)
+color = Color(0, 0, 0, 0.329)
+
+[node name="ColorRect13" type="ColorRect" parent="Control/CanvasLayer/clock/Sprite2D"]
+offset_left = -28.9437
+offset_top = -0.946041
+offset_right = -23.9437
+offset_bottom = 1.05396
+rotation = -1.0472
+pivot_offset = Vector2(28.9448, 1.00122)
+color = Color(0, 0, 0, 0.329)
+
+[node name="ColorRect14" type="ColorRect" parent="Control/CanvasLayer/clock/Sprite2D"]
+offset_left = -0.943756
+offset_top = 24.054
+offset_right = 1.05624
+offset_bottom = 29.054
+rotation = -1.0472
+pivot_offset = Vector2(0.944916, -23.9988)
+color = Color(0, 0, 0, 0.329)
+
+[node name="ColorRect15" type="ColorRect" parent="Control/CanvasLayer/clock/Sprite2D"]
+offset_left = -0.86927
+offset_top = -28.8716
+offset_right = 1.13073
+offset_bottom = -23.8716
+rotation = -1.0472
+pivot_offset = Vector2(0.870399, 29.0011)
+color = Color(0, 0, 0, 0.329)
+
 [node name="Label" type="Label" parent="Control/CanvasLayer/clock"]
 custom_minimum_size = Vector2(70, 50)
 layout_mode = 2
@@ -2569,7 +2638,8 @@ rendering_quadrant_size = 4
 
 [node name="test_pawn" parent="." instance=ExtResource("45_ohle3")]
 position = Vector2(638, 309)
-scale = Vector2(1, 1)
+scale = Vector2(0.06, 0.06)
+motion_mode = 1
 floor_constant_speed = true
 characteristics = SubResource("Resource_w3tfr")
 
@@ -2589,6 +2659,9 @@ script = ExtResource("29_gg2yg")
 process_mode = 2
 script = ExtResource("48_7u3gs")
 
+[node name="world_handler" type="Node" parent="."]
+
+[connection signal="joystick_moved" from="Control/CanvasLayer/joystick_container/Control" to="Camera2D" method="_on_control_joystick_moved"]
 [connection signal="pressed" from="Control/CanvasLayer/exit_button" to="." method="_on_button_pressed"]
 [connection signal="toggled" from="Control/CanvasLayer/selection_buttons_rect/HBoxContainer/buildable_type_selection_menu/wall_selection_button" to="Control/CanvasLayer/selection_buttons_rect" method="_on_wall_selection_button_toggled"]
 [connection signal="toggled" from="Control/CanvasLayer/selection_buttons_rect/HBoxContainer/buildable_type_selection_menu/floor_selection_button" to="Control/CanvasLayer/selection_buttons_rect" method="_on_floor_selection_button_toggled"]

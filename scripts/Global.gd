@@ -33,6 +33,7 @@ var class_reference : Dictionary = {
 	"walls_remove" : buildables.walls.remove
 }
 
+
 class BuildableItem:
 	var id : int
 	var collision : bool
@@ -59,7 +60,6 @@ class BuildableItem:
 	func get_queued_layer_node(layers: Dictionary) -> Node:
 		return layers.get(queued_layer, null)
 
-
 class BuildableLightSource:
 	var id : int
 	var collision : bool
@@ -84,6 +84,11 @@ class BuildableLightSource:
 		self.light_scene = _light_scene
 		self.radians_per_alternative = _radians_per_alternative
 
+	func get_layer_node(layers: Dictionary) -> Node:
+		return layers.get(layer, null)
+
+	func get_queued_layer_node(layers: Dictionary) -> Node:
+		return layers.get(queued_layer, null)
 
 class BuildableTerrain:
 	var id : int
@@ -95,6 +100,7 @@ class BuildableTerrain:
 	var terrain_set : int
 	var terrain_id : int
 	var build_time : float
+
 
 	func _init(_id, _collision, _wall, _layer, _queued_layer, _filled, _terrain_set, _terrain_id, _build_time = 4.0):
 		self.id = _id
