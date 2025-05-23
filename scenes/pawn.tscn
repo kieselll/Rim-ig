@@ -1,41 +1,28 @@
-[gd_scene load_steps=13 format=3 uid="uid://b46j0js042i4q"]
+[gd_scene load_steps=16 format=3 uid="uid://b46j0js042i4q"]
 
-[ext_resource type="Script" path="res://scripts/CharacterBody2D.gd" id="1_88j76"]
-[ext_resource type="Script" path="res://resources/resource_scripts/pawn_stat_resouce.gd" id="2_tucm2"]
-[ext_resource type="Texture2D" uid="uid://supgli3ajes5" path="res://man.png" id="3_ucej0"]
-[ext_resource type="Texture2D" uid="uid://cjq2kpjxx88ae" path="res://textures/items/Untitled 08-08-2024 08-47-15.png" id="4_og358"]
-[ext_resource type="Script" path="res://scripts/state_machine.gd" id="5_tvxll"]
-[ext_resource type="Script" path="res://scenes/animation_player.gd" id="6_w3j45"]
-
-[sub_resource type="Resource" id="Resource_ls40f"]
-resource_local_to_scene = true
-script = ExtResource("2_tucm2")
-personality = 2
-stats = {
-"happiness": 0,
-"health": 100,
-"tiredness": 100
-}
-traits = []
-abilities = {
-"building": 0
-}
-
-[sub_resource type="Curve2D" id="Curve2D_4yoxg"]
-_data = {
-"points": PackedVector2Array(11.2797, -52.7323, -11.2797, 52.7323, 132, -130, -11.094, 53.4439, 11.094, -53.4439, 0, -132, 0, 70, 0, 0, 0, -132, -77.087, -81.7589, 77.087, 81.7589, 132, -130)
-}
-point_count = 4
-
-[sub_resource type="Curve2D" id="Curve2D_gyqku"]
-_data = {
-"points": PackedVector2Array(-6.7286, 59.7935, 6.7286, -59.7935, 12, -116, -64.7846, -32.1527, 64.7846, 32.1527, 116, -140, -44.8441, 14.2866, 44.8441, -14.2866, 12, -116)
-}
-point_count = 3
+[ext_resource type="Script" uid="uid://6c7xkrnwj04x" path="res://scripts/CharacterBody2D.gd" id="1"]
+[ext_resource type="Texture2D" uid="uid://supgli3ajes5" path="res://man.png" id="3"]
+[ext_resource type="Texture2D" uid="uid://cjq2kpjxx88ae" path="res://textures/items/Untitled 08-08-2024 08-47-15.png" id="4"]
+[ext_resource type="Script" uid="uid://coyult43c47ei" path="res://scripts/state_machine.gd" id="5"]
+[ext_resource type="Script" uid="uid://cjj5f7c8sr5ja" path="res://scripts/animation_player.gd" id="6"]
+[ext_resource type="Script" uid="uid://dfbrbyd3o8hij" path="res://scripts/components/node_builder.gd" id="6_y1472"]
+[ext_resource type="Script" uid="uid://1yujcdfforo4" path="res://scripts/components/node_movement.gd" id="7_ojbo2"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_taskf"]
 radius = 150.0
 height = 445.0
+
+[sub_resource type="Curve2D" id="Curve2D_4yoxg"]
+_data = {
+"points": PackedVector2Array(-32.8515, 14.7157, 32.8515, -14.7157, 30.8737, -200.03, 18.523, -18.871, -18.523, 18.871, 108.466, -105.476, -38.8196, 16.7848, 38.8196, -16.7848, 30.8737, -200.03)
+}
+point_count = 3
+
+[sub_resource type="Curve2D" id="Curve2D_gyqku"]
+_data = {
+"points": PackedVector2Array(-6.7286, 59.7935, 6.7286, -59.7935, 12, -116, -41.3704, -50.8047, 41.3704, 50.8047, 122, -150, 6.6602, 25.1493, -6.6602, -25.1493, 12, -116)
+}
+point_count = 3
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bqii1"]
 bg_color = Color(0, 0, 0, 1)
@@ -57,28 +44,23 @@ corner_radius_bottom_right = 2
 corner_radius_bottom_left = 2
 anti_aliasing = false
 
+[sub_resource type="Gradient" id="Gradient_trpkc"]
+interpolation_mode = 1
+colors = PackedColorArray(0.956863, 0.643137, 0.505882, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_vrna7"]
+gradient = SubResource("Gradient_trpkc")
+width = 1
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_bgilg"]
+gradient = SubResource("Gradient_trpkc")
+width = 1
+
 [node name="test_pawn" type="CharacterBody2D" groups=["teammates"]]
 scale = Vector2(0.5, 0.5)
-safe_margin = 0.12
-script = ExtResource("1_88j76")
-characteristics = SubResource("Resource_ls40f")
-
-[node name="Path2D" type="Path2D" parent="."]
-position = Vector2(24, 44)
-curve = SubResource("Curve2D_4yoxg")
-
-[node name="PathFollow2D" type="PathFollow2D" parent="Path2D"]
-position = Vector2(132, -130)
-rotation = 1.78153
-
-[node name="Path2D2" type="Path2D" parent="."]
-position = Vector2(-146, 44)
-curve = SubResource("Curve2D_gyqku")
-
-[node name="PathFollow2D2" type="PathFollow2D" parent="Path2D2"]
-position = Vector2(12, -116)
-rotation = -0.308418
-progress = 504.017
+input_pickable = true
+slide_on_ceiling = false
+script = ExtResource("1")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -0.5)
@@ -88,17 +70,40 @@ shape = SubResource("CapsuleShape2D_taskf")
 z_index = 2
 texture_filter = 1
 scale = Vector2(16, 16)
-texture = ExtResource("3_ucej0")
-
-[node name="RayCast2D" type="RayCast2D" parent="."]
-target_position = Vector2(0, 0)
+texture = ExtResource("3")
 
 [node name="Sprite2D2" type="Sprite2D" parent="."]
+visible = false
 z_index = 2
 texture_filter = 1
 position = Vector2(-48, 41)
 scale = Vector2(16, 16)
-texture = ExtResource("4_og358")
+texture = ExtResource("4")
+
+[node name="Path2D" type="Path2D" parent="."]
+position = Vector2(7.35153, 32.8583)
+scale = Vector2(0.927926, 0.994143)
+curve = SubResource("Curve2D_4yoxg")
+
+[node name="PathFollow2D" type="PathFollow2D" parent="Path2D"]
+position = Vector2(64.7032, -190.343)
+rotation = 0.656434
+progress = 36.8736
+rotates = false
+cubic_interp = false
+
+[node name="Path2D2" type="Path2D" parent="."]
+position = Vector2(-146, 44)
+curve = SubResource("Curve2D_gyqku")
+
+[node name="PathFollow2D2" type="PathFollow2D" parent="Path2D2"]
+position = Vector2(12, -116)
+rotation = -1.45874
+rotates = false
+cubic_interp = false
+
+[node name="RayCast2D" type="RayCast2D" parent="."]
+target_position = Vector2(0, 0)
 
 [node name="alert_timer" type="Timer" parent="."]
 wait_time = 30.0
@@ -106,16 +111,17 @@ one_shot = true
 
 [node name="state_machine" type="Node" parent="."]
 editor_description = "This thing will probably take me weeks to make"
-script = ExtResource("5_tvxll")
+script = ExtResource("5")
 
 [node name="Panel" type="Panel" parent="."]
 visible = false
 light_mask = 2
 z_index = 2
-offset_left = -20.0
-offset_top = -24.0
-offset_right = 20.0
-offset_bottom = -18.0
+offset_left = -320.0
+offset_top = -356.0
+offset_right = -280.0
+offset_bottom = -350.0
+scale = Vector2(16, 16)
 theme_override_styles/panel = SubResource("StyleBoxFlat_bqii1")
 
 [node name="Panel2" type="Panel" parent="Panel"]
@@ -128,23 +134,36 @@ offset_bottom = 5.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_a4pcm")
 
 [node name="animation_player" type="Node" parent="."]
-script = ExtResource("6_w3j45")
+script = ExtResource("6")
 
-[node name="right_hand" type="ColorRect" parent="."]
-z_index = 5
-offset_left = 179.741
-offset_top = -101.374
-offset_right = 219.741
-offset_bottom = -61.3741
-color = Color(0.956863, 0.643137, 0.505882, 1)
+[node name="right_hand" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(126, -190)
+scale = Vector2(40, 40)
+texture = SubResource("GradientTexture1D_vrna7")
 
-[node name="left_hand" type="ColorRect" parent="."]
-z_index = 5
-offset_left = -159.127
-offset_top = -84.9853
-offset_right = -119.127
-offset_bottom = -44.9853
-color = Color(0.956863, 0.643137, 0.505882, 1)
+[node name="left_hand" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(-168, -198)
+scale = Vector2(40, 40)
+texture = SubResource("GradientTexture1D_bgilg")
+
+[node name="Label" type="Label" parent="."]
+offset_left = -134.0
+offset_top = -340.0
+offset_right = 139.0
+offset_bottom = -289.0
+theme_override_font_sizes/font_size = 50
+text = "Test_pawn2"
+
+[node name="BuildingComponent" type="Node" parent="."]
+script = ExtResource("6_y1472")
+metadata/_custom_type_script = "uid://dfbrbyd3o8hij"
+
+[node name="Movement_component" type="Node" parent="."]
+script = ExtResource("7_ojbo2")
+movement_smoothness = 30.0
+metadata/_custom_type_script = "uid://1yujcdfforo4"
 
 [connection signal="timeout" from="alert_timer" to="." method="_on_alert_timer_timeout"]
 [connection signal="state_changed" from="state_machine" to="." method="_on_state_changed"]

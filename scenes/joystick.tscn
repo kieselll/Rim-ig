@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://mkd08kjbwtku"]
 
-[ext_resource type="Script" path="res://scripts/joystick_control.gd" id="1_u1xv1"]
+[ext_resource type="Script" uid="uid://b68avsqj8bev" path="res://scripts/joystick_control.gd" id="1"]
 
 [sub_resource type="Gradient" id="Gradient_3wgj8"]
 offsets = PackedFloat32Array(0, 0.688235, 0.691803)
@@ -27,7 +27,7 @@ fill_from = Vector2(0.5, 0.5)
 fill_to = Vector2(1, 1)
 
 [node name="Node2D" type="Node2D"]
-script = ExtResource("1_u1xv1")
+script = ExtResource("1")
 
 [node name="Sprite2D2" type="Sprite2D" parent="."]
 texture_filter = 2

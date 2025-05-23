@@ -1,45 +1,37 @@
 extends Node
 @onready var parent = $".."
-enum states {
-	IDLE,
-	ALERT,
-	ATTACK,
-	REST,
-	BUILD,
-	DEMOLISH,
-	UNCONCIOUS,
-	KNOCKED,
+enum states{
+	IDLE, 
+	ALERT, 
+	ATTACK, 
+	REST, 
+	BUILD, 
+	DEMOLISH, 
+	UNCONCIOUS, 
+	KNOCKED, 
 	DEAD
 }
 var prev_state
 var state = states.IDLE
-signal state_changed
+signal state_changed(state)
 
-func _process(_delta: float) -> void:
+func _process(_delta: float) -> void :
 	prev_state = state
-	if parent.healthy:
-		var tiredness = parent.characteristics.get_stat("tiredness")
-		if state == states.REST:
+
+	if not parent.healthy:
+		return
+
+	var tiredness = parent.characteristics.get_stat("tiredness")
+
+	match state:
+		states.REST:
 			if tiredness < 20:
-				if !Global.building_queue.keys().is_empty():
-					state = states.BUILD
-					parent.first_time_building = true
-				elif !Global.demolition_queue.keys().is_empty():
-					state = states.DEMOLISH
-					parent.first_time_building = true
-				else:
-					state = states.IDLE
-		elif tiredness > 90:
-			state = states.REST
-		else:
-			if !Global.building_queue.keys().is_empty():
-				state = states.BUILD
-				parent.first_time_building = true
-			elif !Global.demolition_queue.keys().is_empty():
-				state = states.DEMOLISH
-				parent.first_time_building = true
+				state = get_next_state()
+		_:
+			if tiredness > 90:
+				state = states.REST
 			else:
-				state = states.IDLE
+				state = get_next_state()
 
 	if parent.characteristics.get_stat("health") <= 20:
 		parent.healthy = false
@@ -51,4 +43,13 @@ func _process(_delta: float) -> void:
 		parent.healthy = true
 	parent.current_state = state
 	if state != prev_state:
-		state_changed.emit()
+		state_changed.emit(state)
+
+
+func get_next_state() -> int:
+	if not Global.building_queue.keys().is_empty() or parent.building_tile:
+		return states.BUILD
+	elif not Global.demolition_queue.keys().is_empty() or parent.demolition_tile:
+		return states.DEMOLISH
+	else:
+		return states.IDLE
